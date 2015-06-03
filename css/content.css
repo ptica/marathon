@@ -1,0 +1,14 @@
+body {
+    margin-top:52px;
+}
+
+#flashMessage {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #3C763D;
+    background-color: #DFF0D8;
+    border-color: #D6E9C6;
+    margin-top: 15px
+}

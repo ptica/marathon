@@ -1,0 +1,30 @@
+{
+  "name": "marathon-bower",
+  "version": "0.0.1",
+  "authors": [
+    "Jan Ptacek <jan.ptacek@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "defunctr": "djinncreative/defunctr",
+    "validator-js": "~3.38.0",
+    "jquery-serialize-object": "~2.4.5",
+    "bootbox.js": "makeusabrew/bootbox#~4.4.0",
+    "es5-shim": "es-shims/es5-shim#~4.1.1",
+    "font-awesome": "~4.3.0",
+    "eonasdan-bootstrap-datetimepicker": "~4.7.14",
+    "moment": "~2.10.3",
+    "moment-range": "~2.0.1",
+    "moment-timezone": "~0.4.0",
+    "Sortable": "~1.2.0"
+  }
+}

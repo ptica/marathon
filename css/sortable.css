@@ -1,0 +1,16 @@
+.list-group {
+    position:relative;
+}
+
+.list-group i {
+  -webkit-transition: opacity .2s;
+  transition: opacity .2s;
+  opacity: 1;
+  display: block;
+  cursor: pointer;
+  color: #C00;
+  top: 10px;
+  right: 40px;
+  position: absolute;
+  font-style: normal;
+}
