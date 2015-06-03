@@ -11,6 +11,14 @@ class UpsellsController extends AppController {
 		$this->set('upsells', $this->Paginator->paginate());
 	}
 
+	public function admin_reorder() {
+		if ($this->request->is('post')) {
+			$this->Upsell->saveMany($this->request->data);
+			exit();
+		}
+		$this->set('upsells', $this->Upsell->find('all'));
+	}
+
 	public function admin_view($id = null) {
 		if (!$this->Upsell->exists($id)) {
 			throw new NotFoundException(__('Invalid upsell'));

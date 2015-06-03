@@ -1,8 +1,10 @@
 <?php
 App::uses('AppModel', 'Model');
-class Upsell extends AppModel {
 
+class Upsell extends AppModel {
 	public $displayField = 'name';
+
+	public $order = array('Upsell.ord'=>'asc');
 
 	public $validate = array(
 		'name' => array(
@@ -18,16 +20,6 @@ class Upsell extends AppModel {
 		'location_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'price' => array(
-			'decimal' => array(
-				'rule' => array('decimal'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
