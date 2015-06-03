@@ -123,6 +123,7 @@ module.exports = function(grunt) {
 			css_admin: {
 				src: [
 					'Vendor/bootstrap/dist/css/bootstrap.css',
+					'Vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
 					'css/*.css'
 				],
 				dest: 'webroot/css/site-admin.css',
