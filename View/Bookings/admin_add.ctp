@@ -44,7 +44,7 @@
 					));?>
 				</div>
 				<div class="form-group">
-					<?php echo $this->Form->input('price_type_id', array('class'=>'form-control', 'placeholder'=>__('Price Type Id')));?>
+					<?php echo $this->Form->input('price_type_id', array('multiple' => true, 'class'=>'form-control', 'placeholder'=>__('Price Type Id')));?>
 				</div>
 
 
