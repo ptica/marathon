@@ -14,7 +14,7 @@
 	<div class="row">
 		<div class="col-md-3">
 			<?php echo $this->element('admin_navigation'); ?>
-					</div><!-- end col md 3 -->
+		</div><!-- end col md 3 -->
 
 		<div class="col-md-9">
 			<table cellpadding="0" cellspacing="0" class="table table-striped">
@@ -22,6 +22,7 @@
 					<tr>
 						<th><?php echo $this->Paginator->sort('name'); ?></th>
 						<th><?php echo $this->Paginator->sort('desc'); ?></th>
+						<th>Locations</th>
 						<th class="actions"></th>
 					</tr>
 				</thead>
@@ -30,6 +31,11 @@
 					<tr>
 						<td><?php echo h($priceType['PriceType']['name']); ?></td>
 						<td><?php echo h($priceType['PriceType']['desc']); ?></td>
+						<td>
+							<?php
+								echo join(', ', Hash::extract($priceType['Location'], '{n}.name'));
+							?>
+						</td>
 						<td class="actions">
 							<?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', array('action' => 'edit', $priceType['PriceType']['id']), array('escape' => false)); ?>
 							<?php echo $this->Form->postLink('<span class="glyphicon glyphicon-remove"></span>', array('action' => 'delete', $priceType['PriceType']['id']), array('escape' => false), __('Are you sure you want to delete # %s?', $priceType['PriceType']['id'])); ?>

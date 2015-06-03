@@ -1,11 +1,11 @@
 <?php
 	$links = array(
-		'Bookings' => '/admin/bookings',
-		'Rooms' => '/admin/rooms',
-		'Upsells' => '/admin/upsells',
 		'Locations'  => '/admin/locations',
+		'Upsells' => '/admin/upsells',
 		'Price Types' => '/admin/price_types',
+		'Rooms' => '/admin/rooms',
 		'Prices' => '/admin/prices',
+		'Bookings' => '/admin/bookings',
 	);
 ?>
 <div class="actions">

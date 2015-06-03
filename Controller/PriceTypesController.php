@@ -14,7 +14,7 @@ class PriceTypesController extends AppController {
 	}
 
 	public function admin_index() {
-		$this->PriceType->recursive = 0;
+		$this->PriceType->recursive = 1;
 		$this->set('priceTypes', $this->Paginator->paginate());
 	}
 
