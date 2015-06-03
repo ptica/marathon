@@ -12,3 +12,7 @@ body {
     border-color: #D6E9C6;
     margin-top: 15px
 }
+
+th.actions {
+    min-width: 50px;
+}

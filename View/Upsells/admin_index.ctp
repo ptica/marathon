@@ -32,9 +32,7 @@
 					<tr>
 						<td><?php echo h($upsell['Upsell']['name']); ?></td>
 						<td><?php echo h($upsell['Upsell']['desc']); ?></td>
-								<td>
-			<?php echo $this->Html->link($upsell['Location']['name'], array('controller' => 'locations', 'action' => 'view', $upsell['Location']['id'])); ?>
-		</td>
+						<td><?php echo $this->Html->link($upsell['Location']['name'], array('controller' => 'locations', 'action' => 'view', $upsell['Location']['id'])); ?></td>
 						<td><?php echo h($upsell['Upsell']['price']); ?></td>
 						<td class="actions">
 							<?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', array('action' => 'edit', $upsell['Upsell']['id']), array('escape' => false)); ?>

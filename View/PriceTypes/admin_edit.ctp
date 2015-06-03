@@ -31,7 +31,7 @@
 					<?php echo $this->Form->input('desc', array('data-provide'=>'wysiwyg', 'class'=>'form-control', 'placeholder'=>__('Desc')));?>
 				</div>
 				<div class="form-group">
-					<?php echo $this->Form->input('Location', array('class'=>'form-control', 'placeholder'=>__('Ord')));?>
+					<?php echo $this->Form->input('Location', array('class'=>'form-control', 'placeholder'=>__('Desc')));?>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-8">
