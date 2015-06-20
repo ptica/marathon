@@ -18,7 +18,7 @@
 		<?php echo $this->Form->create('User'); ?>
 			<fieldset>
 				<p>
-					Fill in your credentials please</a>
+					Fill in your credentials please
 				</p>
 				<?php
 					echo $this->Form->input('username', array('label'=>__('Username')));

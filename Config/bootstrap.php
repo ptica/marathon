@@ -19,6 +19,10 @@ CakePlugin::load(array(
 	//'Configuration',
 	'ClearCache',
 	//'RangeParser'
+	'Payment' => array(
+		'bootstrap' => true,
+		'routes' => false
+	),
 ));
 
 // Setup a 'default' cache configuration for use in the application.
@@ -153,3 +157,9 @@ if (0) try {
 } catch (Exception $e) {
 	print($e->getMessage());
 }
+
+// load payment gateway settings
+Configure::load('gp/gp_merchant');
+
+// css version bump string
+Configure::load('version');
