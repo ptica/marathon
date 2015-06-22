@@ -1,8 +1,5 @@
 var React = require('react');
-var RoomAPI = require('../utils/RoomAPI');
 var RoomStore = require('../stores/RoomStore');
-
-RoomAPI.getRoomData();
 
 /**
  * Retrieve the current data from the RoomStore
@@ -146,7 +143,4 @@ var Booking = React.createClass({
 	}
 });
 
-// initial render so we may setState
-if ($('#Booking').length) {
-	App.booking = React.render(<Booking/>, document.getElementById('Booking'));
-}
+module.exports = Booking;

@@ -49,3 +49,5 @@ var Payment = React.createClass({
 if ($('#Payment').length) {
 	App.payment = React.render(<Payment/>, document.getElementById('Payment'));
 }
+
+module.exports = Payment;
