@@ -25,6 +25,7 @@
     "moment": "~2.10.3",
     "moment-range": "~2.0.1",
     "moment-timezone": "~0.4.0",
-    "Sortable": "~1.2.0"
+    "Sortable": "~1.2.0",
+    "react": "~0.13.3"
   }
 }
