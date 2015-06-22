@@ -6,6 +6,7 @@ module.exports = {
 		var url = window.location.href;
 		url = App.base + '/rooms/get';
 		$.get(url, function(rooms) {
+			rooms = JSON.parse(rooms);
 			BookingActions.receiveRooms(rooms);
 		});
 	}

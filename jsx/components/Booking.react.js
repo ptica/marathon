@@ -1,5 +1,6 @@
 var React = require('react');
 var RoomStore = require('../stores/RoomStore');
+var Room = require('./Room.react');
 
 /**
  * Retrieve the current data from the RoomStore
@@ -24,7 +25,7 @@ var Booking = React.createClass({
 		RoomStore.removeChangeListener(this._onChange);
  	},
 	/**
-	* Event handler for 'change' events coming from the TodoStore
+	* Event handler for 'change' events coming from the RoomStore
 	*/
 	_onChange: function() {
 		this.setState(getAppState());
@@ -45,7 +46,14 @@ var Booking = React.createClass({
 		return this.state.payment_id;
 	},
 	render: function() {
-		console.log(this.state.rooms);
+		var all_rooms = this.state.rooms;
+		console.log(all_rooms);
+		var rooms = [];
+		for (var key in all_rooms) {
+			console.log(key);
+			rooms.push(<Room key={key} room={all_rooms[key]} />);
+		}
+
 		return (
 			<div>
 				<div className="row">
@@ -117,6 +125,13 @@ var Booking = React.createClass({
 						<label htmlFor="BookingBeds" className="col-sm-2 control-label">Beds</label>
 						<div className="col-sm-8 input-group">
 							<input ref="beds" name="data[Booking][beds]" className="form-control" placeholder="Beds" type="number" id="BookingBeds" required="required"/>
+						</div>
+					</div>
+
+					<div className="form-group">
+						<label htmlFor="BookingRooms" className="col-sm-2 control-label">Rooms</label>
+						<div className="col-sm-8 input-group rooms">
+							{rooms}
 						</div>
 					</div>
 

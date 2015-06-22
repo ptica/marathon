@@ -1,6 +1,6 @@
 var React = require('react');
 var RoomAPI = require('./utils/RoomAPI');
-var Booking = require('./components/booking.react');
+var Booking = require('./components/Booking.react');
 
 RoomAPI.getRoomData();
 
