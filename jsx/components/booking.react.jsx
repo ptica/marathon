@@ -1,25 +1,36 @@
 var React = require('react');
+var RoomAPI = require('../utils/RoomAPI');
 var RoomStore = require('../stores/RoomStore');
+
+RoomAPI.getRoomData();
+
+/**
+ * Retrieve the current data from the RoomStore
+ */
+function getAppState() {
+	return {
+		rooms: RoomStore.getRooms(),
+		booking_id: false,
+		payment_id: false,
+		email: 'email@example.com'
+	};
+}
 
 var Booking = React.createClass({
 	getInitialState: function() {
-		return {
-			rooms: RoomStore.get_rooms(
-				this.refs.start,
-				this.refs.end,
-				null,
-				this.refs.beds
-			),
-			booking_id: false,
-			payment_id: false,
-			email: 'email'
-		};
- 	},
-	componentWillMount: function () {
-
+		return getAppState();
 	},
 	componentDidMount: function () {
-
+		RoomStore.addChangeListener(this._onChange);
+	},
+	componentWillUnmount: function() {
+		RoomStore.removeChangeListener(this._onChange);
+ 	},
+	/**
+	* Event handler for 'change' events coming from the TodoStore
+	*/
+	_onChange: function() {
+		this.setState(getAppState());
 	},
 	get_price: function () {
 		return 1000;
@@ -37,6 +48,7 @@ var Booking = React.createClass({
 		return this.state.payment_id;
 	},
 	render: function() {
+		console.log(this.state.rooms);
 		return (
 			<div>
 				<div className="row">

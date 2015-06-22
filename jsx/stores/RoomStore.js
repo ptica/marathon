@@ -5,25 +5,14 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 
-var _rooms = {};
-
-/**
- * Get ROOMS from server API.
- * @param	{start} moment
- * @param	{end} moment
- * @param	{price_type} int
- * @param	{beds} number
- */
-function get_rooms(start, end, price_type, beds) {
-
-}
+var _rooms = [];
 
 /**
  * Receive ROOMS from server API.
  * @param	{rooms} rooms
  */
 function receive_rooms(rooms) {
-
+	_rooms = rooms;
 }
 
 
@@ -32,7 +21,7 @@ var RoomStore = assign({}, EventEmitter.prototype, {
 	 * Get the entire collection of Rooms.
 	 * @return {object}
 	 */
-	getAll: function() {
+	getRooms: function() {
 		return _rooms;
 	},
 
@@ -57,18 +46,14 @@ var RoomStore = assign({}, EventEmitter.prototype, {
 
 // Register callback to handle all updates
 AppDispatcher.register(function(action) {
-	var text;
-
 	switch(action.actionType) {
-		case BookingConstants.BOOKING_RECIEVE_ROOMS:
-			if (text !== '') {
-				create(text);
-				RoomStore.emitChange();
-			}
+		case BookingConstants.BOOKING_RECEIVE_ROOMS:
+			receive_rooms(action.data);
+			RoomStore.emitChange();
 			break;
 
 		default:
-			// no op
+		// no op
 	}
 });
 

@@ -3,21 +3,7 @@ var BookingStore = require('../stores/BookingStore');
 
 var Payment = React.createClass({
 	getInitialState: function() {
-		return {
-			day: moment(),	 // momentjs
-			time: '00:00',
-			connections: 1,
-			you: {
-				'firstname': 'Firstname',
-				'lastname': 'Lastname',
-				'gender': 'gender',
-				'birth_date': 'birth_date',
-				'birth_time': 'birth_time',
-				'birth_place': 'birth_place',
-			},
-			phone: 'phone',
-			email: 'email'
-		};
+		return {};
  	},
 	get_price: function () {
 	},

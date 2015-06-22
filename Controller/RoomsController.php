@@ -5,6 +5,26 @@ class RoomsController extends AppController {
 
 	public $components = array('Paginator', 'Session');
 
+	public function get() {
+		$conditions = array();
+
+		// query string params
+		$start = $this->request->query('start');
+		$end   = $this->request->query('end');
+
+		if ($start && $end) {
+			$conditions['start >='] = $start;
+			$conditions['end <']    = $end;
+		} else {
+			$conditions['start >='] = date('Y-m-01', strtotime("-1 month"));
+			$conditions['end <']    = date('Y-m-t', strtotime("+5 month"));
+		}
+
+		$res = $this->Room->find('all', compact('conditions'));
+
+		return new CakeResponse(array('body'=>json_encode($res)));
+	}
+
 
 	public function admin_index() {
 		$this->Room->recursive = 0;
