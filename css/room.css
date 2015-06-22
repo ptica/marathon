@@ -42,3 +42,17 @@
     color: #cdcdcd;
     text-align: center;
 }
+
+.rooms .none {
+    line-height: 22px;
+    margin-top: 6px;
+    color: gray;
+    font-style: italic;
+    padding-left: 12px;
+}
+
+.totalPrice {
+    font-size: 28px;
+    font-weight: bold;
+    padding-left: 12px!important;
+}

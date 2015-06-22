@@ -9,7 +9,10 @@ var BookingActions = require('../actions/BookingActions');
 function getAppState() {
 	return {
 		rooms: RoomStore.getRooms(),
-		selected_room_id: RoomStore.getSelectedRoom(),
+		selected_room: RoomStore.getSelectedRoom(),
+		selected_price_type_id: 2, // other // not used now !!!
+		selected_beds: RoomStore.getSelectedBeds(),
+		nights_count: RoomStore.getNightsCount(),
 		booking_id: false,
 		payment_id: false,
 		email: 'email@example.com'
@@ -35,13 +38,36 @@ var Booking = React.createClass({
 	selectRoom: function (room_id) {
 		BookingActions.selectRoom(room_id);
 	},
+	selectBeds: function (e) {
+		var count = e.target.value;
+		if ($.isNumeric(count) && count >= 0 && count < 5) {
+			BookingActions.selectBeds(e.target.value);
+		} else {
+			// to reset the input
+			this.forceUpdate();
+		}
+	},
+	countNights: function () {
+		var start = this.refs.start.getDOMNode().value;
+		var end = this.refs.end.getDOMNode().value;
+		BookingActions.setDates(start, end);
+	},
 	render: function() {
 		var all_rooms = this.state.rooms;
 		var rooms = [];
 		for (var key in all_rooms) {
-			var selected = (this.state.selected_room_id == all_rooms[key].Room.id);
-			rooms.push(<Room key={key} selected={selected} room={all_rooms[key]} onClick={this.selectRoom}/>);
+			var selected = (this.state.selected_room.Room.id == all_rooms[key].Room.id);
+			if (this.state.selected_beds <= all_rooms[key].Room.beds) {
+				rooms.push(<Room key={key} selected={selected} room={all_rooms[key]} onClick={this.selectRoom}/>);
+			}
 		}
+
+		if (rooms.length == 0) {
+			rooms = <div className="none">Alas! No suitable room available.</div>;
+		}
+
+		var selected_room = this.state.selected_room;
+		var total_price = selected_room.Price * this.state.nights_count * this.state.selected_beds;
 
 		return (
 			<div>
@@ -67,9 +93,9 @@ var Booking = React.createClass({
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="BookingSecondname" className="col-sm-2 control-label">Second name</label>
+						<label htmlFor="BookingLastname" className="col-sm-2 control-label">Last name</label>
 						<div className="col-sm-8 input-group">
-							<input ref="secondname" name="data[Booking][secondname]" className="form-control" placeholder="Second name" maxLength="255" type="text" id="BookingSecondname" required="required"/>
+							<input ref="lastname" name="data[Booking][secondname]" className="form-control" placeholder="Last name" maxLength="255" type="text" id="BookingLastname" required="required"/>
 						</div>
 					</div>
 
@@ -81,26 +107,33 @@ var Booking = React.createClass({
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="BookingStart" className="col-sm-2 control-label">Start</label>
+						<label htmlFor="BookingStart" className="col-sm-2 control-label">Arrival</label>
 						<div className="col-sm-8 input-group">
 							<div className="input-group">
-								<input ref="start" defaultValue="7.9.2015" name="data[Booking][start]" className="form-control" data-provide="datepicker" data-date-language="cs_CZ" placeholder="Start" type="text" id="BookingStart"/>
+								<input ref="start" onChange={this.countNights} defaultValue="7.9.2015" name="data[Booking][start]" className="form-control" data-provide="datepicker" placeholder="Start" type="text" id="BookingStart"/>
 								<span className="input-group-addon"><i className="glyphicon glyphicon-th"></i></span>
 							</div>
 						</div>
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="BookingEnd" className="col-sm-2 control-label">End</label>
+						<label htmlFor="BookingEnd" className="col-sm-2 control-label">Departure</label>
 						<div className="col-sm-8 input-group">
 							<div className="input-group">
-								<input ref="end" defaultValue="12.9.2015" name="data[Booking][end]" className="form-control" data-provide="datepicker" data-date-language="cs_CZ" placeholder="End" type="text" id="BookingEnd"/>
+								<input ref="end" onChange={this.countNights} defaultValue="12.9.2015" name="data[Booking][end]" className="form-control" data-provide="datepicker" placeholder="End" type="text" id="BookingEnd"/>
 								<span className="input-group-addon"><i className="glyphicon glyphicon-th"></i></span>
 							</div>
 						</div>
 					</div>
 
 					<div className="form-group">
+						<label htmlFor="BookingNights" className="col-sm-2 control-label">Nights</label>
+						<div className="col-sm-8 input-group rooms">
+							<div className="none">{this.state.nights_count}</div>
+						</div>
+					</div>
+
+					{/*<div className="form-group">
 						<label htmlFor="BookingPriceTypeId" className="col-sm-2 control-label">Price Type</label>
 						<div className="col-sm-8 input-group">
 							<input type="hidden" name="data[Booking][price_type_id]" value="" id="BookingPriceTypeId"/>
@@ -108,12 +141,12 @@ var Booking = React.createClass({
 							<div className="checkbox"><label htmlFor="BookingPriceTypeId1" className=""><input type="checkbox" name="data[Booking][price_type_id][]" value="1" id="BookingPriceTypeId1"/> student or lecturer</label></div>
 							<div className="checkbox"><label htmlFor="BookingPriceTypeId2" className=""><input type="checkbox" name="data[Booking][price_type_id][]" value="2" id="BookingPriceTypeId2"/> other</label></div>
 						</div>
-					</div>
+					</div>*/}
 
 					<div className="form-group">
 						<label htmlFor="BookingBeds" className="col-sm-2 control-label">Beds</label>
 						<div className="col-sm-8 input-group">
-							<input ref="beds" name="data[Booking][beds]" className="form-control" placeholder="Beds" type="number" id="BookingBeds" required="required"/>
+							<input ref="beds" value={this.state.selected_beds} onChange={this.selectBeds} name="data[Booking][beds]" className="form-control" placeholder="Beds" type="number" id="BookingBeds" required="required"/>
 						</div>
 					</div>
 
@@ -125,20 +158,34 @@ var Booking = React.createClass({
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="BookingFellowEmail" className="col-sm-2 control-label">Fellow Email</label>
+						<label htmlFor="BookingFellowEmail" className="col-sm-2 control-label">Room Fellows</label>
 						<div className="col-sm-8 input-group">
-							<input ref="fellow_email" name="data[Booking][fellow_email]" className="form-control" placeholder="Fellow Email" maxLength="255" type="text" id="BookingFellowEmail"/>
+							<input ref="fellow_email" name="data[Booking][fellow_email]" className="form-control" placeholder="fill in emails of participants you want to share the room with (comma separated)" maxLength="255" type="text" id="BookingFellowEmail"/>
 						</div>
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="UpsellUpsell" className="col-sm-2 control-label">Upsell</label>
+						<label htmlFor="UpsellUpsell" className="col-sm-2 control-label">Addons</label>
 						<div className="col-sm-8 input-group">
 							<input type="hidden" name="data[Upsell][Upsell]" value="" id="UpsellUpsell"/>
 							<div className="checkbox"><label htmlFor="UpsellUpsell2" className=""><input type="checkbox" name="data[Upsell][Upsell][]" value="2" id="UpsellUpsell2"/> internet via RJ45</label></div>
 							<div className="checkbox"><label htmlFor="UpsellUpsell1" className=""><input type="checkbox" name="data[Upsell][Upsell][]" value="1" id="UpsellUpsell1"/> breakfast</label></div>
 						</div>
 					</div>
+
+					<div className="form-group">
+						<label htmlFor="UpsellUpsell" className="col-sm-2 control-label">Total price</label>
+						<div className="col-sm-8 input-group totalPrice">{total_price} CZK</div>
+					</div>
+
+					<div className="form-group">
+						<div className="col-sm-offset-2 col-sm-8">
+							<div className="submit">
+								<input className="btn btn-primary" type="submit" value="Register!"/>
+							</div>
+						</div>
+					</div>
+
 				</form>
 				</div>
 				</div>

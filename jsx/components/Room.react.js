@@ -33,7 +33,7 @@ var Room = React.createClass({
 					{this.props.room.Location.desc}
 				</p>
 				<div className="price">
-					<span>{this.props.room.Price[0].price} CZK</span>
+					<span>{this.props.room.Price} CZK</span>
 					<span className="notice">per bed per night</span>
 				</div>
 

@@ -6,23 +6,36 @@ var assign = require('object-assign');
 var CHANGE_EVENT = 'change';
 
 var _rooms = [];
+var _rooms_by_id = {null: {Room: {id:null}, Price: 0}};
 var _selected_room_id = null;
+var _selected_beds = 1;
+var _start = moment('7.9.2015', 'D.M.YYYY');
+var _end   = moment('12.9.2015', 'D.M.YYYY');
 
-/**
- * Receive ROOMS from server API.
- * @param	{rooms} rooms
- */
 function receive_rooms(rooms) {
+	// Receive ROOMS from server API.
 	_rooms = rooms;
+
+	// construct lookup table
+	for (var key in rooms) {
+		var id = rooms[key].Room.id;
+		_rooms_by_id[id] = rooms[key];
+	}
 }
 
-/**
- *
- * @param	{rooms} rooms
- */
 function set_selected_room(room_id) {
 	_selected_room_id = room_id;
 }
+
+function set_selected_beds(count) {
+	_selected_beds = count;
+}
+
+function set_selected_nights(data) {
+	_start = moment(data.start, 'D.M.YYYY');
+	_end = moment(data.end, 'D.M.YYYY');
+}
+
 
 var RoomStore = assign({}, EventEmitter.prototype, {
 	/**
@@ -34,7 +47,26 @@ var RoomStore = assign({}, EventEmitter.prototype, {
 	},
 
 	getSelectedRoom: function() {
-		return _selected_room_id;
+		return _rooms_by_id[_selected_room_id];
+	},
+
+	getSelectedBeds: function() {
+		return _selected_beds;
+	},
+
+	getNightsCount: function() {
+		var nights_count = _end.diff(_start, 'days');
+		if (nights_count < 0) nights_count = 0;
+		console.log('nights_count:' + nights_count);
+		return nights_count;
+	},
+
+	getStart: function() {
+		return _start;
+	},
+
+	getEnd: function() {
+		return _end;
 	},
 
 	emitChange: function() {
@@ -66,6 +98,16 @@ AppDispatcher.register(function(action) {
 
 		case BookingConstants.SET_SELECTED:
 			set_selected_room(action.data);
+			RoomStore.emitChange();
+			break;
+
+		case BookingConstants.SET_BEDS:
+			set_selected_beds(action.data);
+			RoomStore.emitChange();
+			break;
+
+		case BookingConstants.SET_NIGHTS:
+			set_selected_nights(action.data);
 			RoomStore.emitChange();
 			break;
 
