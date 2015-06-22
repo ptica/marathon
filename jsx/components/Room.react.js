@@ -13,7 +13,20 @@ var Room = React.createClass({
 	},
 	render: function() {
 		return (
-			<div className="room">{this.props.room.Room.name}</div>
+			<div className="room">
+				<input type="checkbox" name="data[Room][id]" value="{this.props.room.Room.id}"/>
+				<h2>
+					<span>{this.props.room.Room.name}</span>
+					<span className="location"> @ {this.props.room.Location.name}</span>
+				</h2>
+				<p>
+					{this.props.room.Location.desc}
+				</p>
+				<div className="price">
+					{this.props.room.Price[0].price}
+				</div>
+
+			</div>
 		);
 	}
 });
