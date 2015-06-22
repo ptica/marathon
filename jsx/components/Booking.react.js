@@ -30,28 +30,15 @@ var Booking = React.createClass({
 	_onChange: function() {
 		this.setState(getAppState());
 	},
-	get_price: function () {
-		return 1000;
-	},
-	get_csas_code: function () {
-		return 203;
-	},
-	get_csas_price: function () {
-		return 10 * 100;
-	},
-	get_booking_id: function () {
-		return this.state.booking_id;
-	},
-	get_payment_id: function () {
-		return this.state.payment_id;
+	selectRoom: function (room_id) {
+		console.log(room_id);
+		//this.setState(getAppState());
 	},
 	render: function() {
 		var all_rooms = this.state.rooms;
-		console.log(all_rooms);
 		var rooms = [];
 		for (var key in all_rooms) {
-			console.log(key);
-			rooms.push(<Room key={key} room={all_rooms[key]} />);
+			rooms.push(<Room key={key} room={all_rooms[key]} onClick={this.selectRoom}/>);
 		}
 
 		return (

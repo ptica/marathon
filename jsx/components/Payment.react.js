@@ -45,9 +45,4 @@ var Payment = React.createClass({
 	}
 });
 
-// initial render so we may setState
-if ($('#Payment').length) {
-	App.payment = React.render(<Payment/>, document.getElementById('Payment'));
-}
-
 module.exports = Payment;

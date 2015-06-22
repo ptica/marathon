@@ -11,10 +11,21 @@ var Room = React.createClass({
 	*/
 	_onChange: function() {
 	},
+	onClick: function(e) {
+		var $input = $(e.target).closest('.room').find('input');
+		$input.prop('checked', !$input.prop('checked'));
+		var room_id = $input.val();
+		// set state on parent via a props.onClick callback
+		this.props.onClick(room_id);
+	},
 	render: function() {
+		var className = "room";
+		if (this.props.selected) {
+			className += " selected";
+		}
 		return (
-			<div className="room">
-				<input type="checkbox" name="data[Room][id]" value="{this.props.room.Room.id}"/>
+			<div className={className} onClick={this.onClick}>
+				<input ref={'room'+this.props.room.Room.id} type="checkbox" name="data[Room][id]" value={this.props.room.Room.id}/>
 				<h2>
 					<span>{this.props.room.Room.name}</span>
 					<span className="location"> @ {this.props.room.Location.name}</span>
@@ -23,7 +34,7 @@ var Room = React.createClass({
 					{this.props.room.Location.desc}
 				</p>
 				<div className="price">
-					{this.props.room.Price[0].price}
+					{this.props.room.Price[0].price} CZK
 				</div>
 
 			</div>
