@@ -1,6 +1,7 @@
 var React = require('react');
 var RoomStore = require('../stores/RoomStore');
 var Room = require('./Room.react');
+var BookingActions = require('../actions/BookingActions');
 
 /**
  * Retrieve the current data from the RoomStore
@@ -8,6 +9,7 @@ var Room = require('./Room.react');
 function getAppState() {
 	return {
 		rooms: RoomStore.getRooms(),
+		selected_room_id: RoomStore.getSelectedRoom(),
 		booking_id: false,
 		payment_id: false,
 		email: 'email@example.com'
@@ -31,14 +33,14 @@ var Booking = React.createClass({
 		this.setState(getAppState());
 	},
 	selectRoom: function (room_id) {
-		console.log(room_id);
-		//this.setState(getAppState());
+		BookingActions.selectRoom(room_id);
 	},
 	render: function() {
 		var all_rooms = this.state.rooms;
 		var rooms = [];
 		for (var key in all_rooms) {
-			rooms.push(<Room key={key} room={all_rooms[key]} onClick={this.selectRoom}/>);
+			var selected = (this.state.selected_room_id == all_rooms[key].Room.id);
+			rooms.push(<Room key={key} selected={selected} room={all_rooms[key]} onClick={this.selectRoom}/>);
 		}
 
 		return (

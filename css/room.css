@@ -1,17 +1,21 @@
 .rooms .room {
     margin: 10px 0px;
-    border: 1px solid gray;
+    border: 2px dashed #dbdbdb;
     padding: 0px 20px 20px 15px;
     position: relative;
     cursor: pointer;
 }
+.rooms .room.selected {
+    border: 2px solid #2FBE2F;;
+}
 
 .rooms .room h2 {
     margin-left: 35px;
+    font-size: 26px;
 }
 
 .rooms .room h2 .location {
-    font-size: 21px;
+    font-size: 19px;
     color: #cbcbcb;
 }
 
@@ -30,4 +34,11 @@
     bottom: 0;
     width: 160px;
     padding: 20px 7px 15px 7px;
+}
+.rooms .room .price .notice {
+    display: block;
+    font-size: 12px;
+    font-weight: normal;
+    color: #cdcdcd;
+    text-align: center;
 }

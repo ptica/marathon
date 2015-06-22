@@ -1,6 +1,7 @@
 var keyMirror = require('keymirror');
 
 module.exports = keyMirror({
-	BOOKING_CREATE: null,
-	BOOKING_RECEIVE_ROOMS: null,
+	CREATE: null,
+	RECEIVE_ROOMS: null,
+	SET_SELECTED: null,
 });
