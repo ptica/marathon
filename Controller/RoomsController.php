@@ -5,6 +5,12 @@ class RoomsController extends AppController {
 
 	public $components = array('Paginator', 'Session');
 
+	// declare public actions
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->allow('get');
+	}
+
 	public function get() {
 		$conditions = array();
 
@@ -20,7 +26,20 @@ class RoomsController extends AppController {
 			//$conditions['end <']    = date('Y-m-t', strtotime("+5 month"));
 		}
 
+		$this->Room->contain(array(
+			'Location',
+			'Price'
+		));
+
 		$res = $this->Room->find('all', compact('conditions'));
+
+		// list prices by price_type
+		foreach ($res as &$item) {
+			//$item['Price'] = Hash::combine($item['Price'], '{n}.price_type_id', '{n}.price');
+			$item['Price'] = $item['Price'][0]['price'];
+		}
+
+		//debug($res);
 
 		return new CakeResponse(array('body'=>json_encode($res)));
 	}

@@ -5,6 +5,11 @@ class BookingsController extends AppController {
 
 	public $components = array('Paginator', 'Session');
 
+	// declare public actions
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->allow('add');
+	}
 
 	public function admin_index() {
 		$this->Booking->recursive = 0;

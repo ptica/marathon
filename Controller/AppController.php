@@ -15,7 +15,8 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 	public $components = array(
 		'Session',
-		'Auth'
+		'Auth',
+		//'DebugKit.Toolbar',
 	);
 
 	public $helpers = array(

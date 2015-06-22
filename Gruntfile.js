@@ -98,6 +98,7 @@ module.exports = function(grunt) {
 					'Vendor/es5-shim/es5-shim.js',
 					'Vendor/es5-shim/es5-sham.js',
 					'Vendor/jquery/dist/jquery.js',
+					'js/app.js'
 				],
 				dest: 'webroot/js/site-pre.js',
 				nonull: true,
@@ -107,11 +108,14 @@ module.exports = function(grunt) {
 			},
 			js_post: {
 				src: [
+					//'Vendor/react/react.js',
 					'Vendor/bootstrap/dist/js/bootstrap.js',
 					'Vendor/bootbox.js/bootbox.js',
 					'Vendor/Sortable/Sortable.js',
 					'Vendor/moment/moment.js',
 					'Vendor/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js',
+					//'dist/jsx-combined.js',
+					'dist/browserify-bundle.js',
 					'js/*.js'
 				],
 				dest: 'webroot/js/site-post.js',
@@ -187,6 +191,31 @@ module.exports = function(grunt) {
 			grunt: {
 				files: ['Gruntfile.js'],
 				tasks: ['default']
+			},
+			browserify: {
+				files: ['<%= browserify.dev.src %>'],
+				tasks: ['browserify:dev']
+			}
+		},
+		browserify: {
+			options: {
+				debug: true,
+				transform: ['reactify'],
+				extensions: ['.jsx'],
+			},
+			dev: {
+				options: {
+					alias: ['react:']  // Make React available externally for dev tools
+				},
+				src: ['jsx/**/*'],
+				dest: 'dist/browserify-bundle.js'
+			},
+			production: {
+				options: {
+					debug: false
+				},
+				src: '<%= browserify.dev.src %>',
+				dest: 'dist/browserify-bundle.js'
 			}
 		}
 	});
@@ -205,11 +234,12 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-react');
 	grunt.loadNpmTasks('grunt-postcss');
 	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-browserify');
 
 	// Task definition
 	grunt.registerTask('default', ['scripts', 'stylesheets', 'copy']);
 	grunt.registerTask('stylesheets', ['concat:css_admin', /*'postcss'*/ 'cssmin']);
-	grunt.registerTask('scripts', ['react', 'concat:js', 'concat:js_post']);
+	grunt.registerTask('scripts', ['browserify:dev', 'concat:js', 'concat:js_post']);
 
 	grunt.registerTask('locales', ['po2json', 'json']);
 	//grunt.registerTask('stylesheets', ['less', 'concat:css', 'cssmin']);

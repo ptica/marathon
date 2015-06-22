@@ -1,5 +1,9 @@
 // MODULE: eonasdan timepicker
-$('input[data-provide=datepicker]').datetimepicker({format: 'D.M.YYYY'})
+$('input[data-provide=datepicker]').datetimepicker({
+    format: 'D.M.YYYY',
+    minDate: '2015-09-02',
+    maxDate: '2015-09-13'
+})
 .next().click(function() {
         // clicking an input-group-addon (next sibling)
         $(this).prev().focus();
@@ -9,15 +13,20 @@ $('input#CalendarItemStart').on('dp.hide', function (e) {
         var $end = $('input#CalendarItemEnd');
         $end.data('DateTimePicker').minDate(e.date);
         if (!$end.val()) {
-                $end.data('DateTimePicker').date(e.date.add(1, 'h'));
+            $end.data('DateTimePicker').date(e.date.add(1, 'h'));
         }
 });
+$('input[data-provide=datepicker]').on('dp.change', function (e) {
+    // notify react Booking component of the change
+    App.booking.countNights();
+});
+
 $('input#CalendarItemEnd').on('dp.hide', function (e) {
         // sensible default for BookingStart
         var $start = $('input#CalendarItemStart');
         $start.data('DateTimePicker').maxDate(e.date);
         if (!$start.val()) {
-                $start.data('DateTimePicker').date(e.date.subtract(1, 'h'));
+            $start.data('DateTimePicker').date(e.date.subtract(1, 'h'));
         }
 });
 

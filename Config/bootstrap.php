@@ -23,6 +23,7 @@ CakePlugin::load(array(
 		'bootstrap' => true,
 		'routes' => false
 	),
+	//'DebugKit',
 ));
 
 // Setup a 'default' cache configuration for use in the application.

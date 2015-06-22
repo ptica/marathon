@@ -3,15 +3,13 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="page-header">
-									<ul class="nav nav-pills pull-right">
-							<li><?php echo $this->Html->link('<span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;' . __('List Bookings'), array('action'=>'index'), array('escape'=>false)); ?></li>
-					</ul>
-								<h1><?php echo __('Admin Add Booking'); ?></h1>
+				<ul class="nav nav-pills pull-right">
+					<li><?php echo $this->Html->link('<span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;' . __('List Bookings'), array('action'=>'index'), array('escape'=>false)); ?></li>
+				</ul>
+				<h1><?php echo __('Admin Add Booking'); ?></h1>
 			</div>
 		</div>
 	</div>
-
-
 
 	<div class="row">
 		<div class="col-md-3">
@@ -44,7 +42,7 @@
 					));?>
 				</div>
 				<div class="form-group">
-					<?php echo $this->Form->input('price_type_id', array('multiple' => true, 'class'=>'form-control', 'placeholder'=>__('Price Type Id')));?>
+					<?php echo $this->Form->input('price_type_id', array('multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Price Type Id')));?>
 				</div>
 
 
@@ -62,7 +60,7 @@
 					<?php echo $this->Form->input('fellow_email', array('class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
 				</div>
 				<div class="form-group">
-					<?php echo $this->Form->input('Upsell', array('class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
+					<?php echo $this->Form->input('Upsell', array('multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-8">
