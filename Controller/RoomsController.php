@@ -5,6 +5,8 @@ class RoomsController extends AppController {
 
 	public $components = array('Paginator', 'Session');
 
+	public $uses = array('Room', 'Upsell', 'Location');
+
 	// declare public actions
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -31,13 +33,27 @@ class RoomsController extends AppController {
 			'Price'
 		));
 
-		$res = $this->Room->find('all', compact('conditions'));
+		$rooms = $this->Room->find('all', compact('conditions'));
 
 		// list prices by price_type
-		foreach ($res as &$item) {
+		foreach ($rooms as &$item) {
 			//$item['Price'] = Hash::combine($item['Price'], '{n}.price_type_id', '{n}.price');
 			$item['Price'] = $item['Price'][0]['price'];
 		}
+
+		// get upsells sorted by locations
+		$this->Location->bindModel(
+			array('hasMany' => array(
+				'Upsell' => array('order'=>'ord asc')
+			))
+		);
+		$upsells = $this->Location->find('all', compact('group'));
+		$upsells = Hash::combine($upsells, '{n}.Location.id', '{n}.Upsell');
+
+		$res = array(
+			'rooms' => $rooms,
+			'upsells' => $upsells
+		);
 
 		//debug($res);
 

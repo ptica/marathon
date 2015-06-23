@@ -43,6 +43,7 @@
     text-align: center;
 }
 
+.upsells .none,
 .rooms .none {
     line-height: 22px;
     margin-top: 6px;

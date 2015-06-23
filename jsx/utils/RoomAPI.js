@@ -5,9 +5,10 @@ module.exports = {
 	getRoomData: function(start, end) {
 		var url = window.location.href;
 		url = App.base + '/rooms/get';
-		$.get(url, function(rooms) {
-			rooms = JSON.parse(rooms);
-			BookingActions.receiveRooms(rooms);
+		$.get(url, function(data) {
+			data = JSON.parse(data);
+			BookingActions.receiveRooms(data.rooms);
+			BookingActions.receiveUpsells(data.upsells);
 		});
 	}
 };

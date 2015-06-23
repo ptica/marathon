@@ -6,14 +6,15 @@ var assign = require('object-assign');
 var CHANGE_EVENT = 'change';
 
 var _rooms = [];
-var _rooms_by_id = {null: {Room: {id:null}, Price: 0}};
+var _rooms_by_id = {null: {Room: {id:null}, Price: 0, Location: {id:null}}};
 var _selected_room_id = null;
 var _selected_beds = 1;
 var _start = moment('7.9.2015', 'D.M.YYYY');
 var _end   = moment('12.9.2015', 'D.M.YYYY');
+var _upsells = {};
 
 function receive_rooms(rooms) {
-	// Receive ROOMS from server API.
+	// Have just received ROOM list from the server API.
 	_rooms = rooms;
 
 	// construct lookup table
@@ -21,6 +22,11 @@ function receive_rooms(rooms) {
 		var id = rooms[key].Room.id;
 		_rooms_by_id[id] = rooms[key];
 	}
+}
+
+function receive_upsells(upsells) {
+	// Have just received Upsell list from the server API.
+	_upsells = upsells;
 }
 
 function set_selected_room(room_id) {
@@ -57,8 +63,11 @@ var RoomStore = assign({}, EventEmitter.prototype, {
 	getNightsCount: function() {
 		var nights_count = _end.diff(_start, 'days');
 		if (nights_count < 0) nights_count = 0;
-		console.log('nights_count:' + nights_count);
 		return nights_count;
+	},
+
+	getUpsells: function(location_id) {
+		return _upsells[location_id];
 	},
 
 	getStart: function() {
@@ -93,6 +102,11 @@ AppDispatcher.register(function(action) {
 	switch(action.actionType) {
 		case BookingConstants.RECEIVE_ROOMS:
 			receive_rooms(action.data);
+			RoomStore.emitChange();
+			break;
+
+		case BookingConstants.RECEIVE_UPSELLS:
+			receive_upsells(action.data);
 			RoomStore.emitChange();
 			break;
 

@@ -38,6 +38,10 @@ var Booking = React.createClass({
 	selectRoom: function (room_id) {
 		BookingActions.selectRoom(room_id);
 	},
+	selectUpsell: function (e) {
+		var upsell_id = e.target.value;
+		BookingActions.selectUpsell(upsell_id);
+	},
 	selectBeds: function (e) {
 		var count = e.target.value;
 		if (count === '' || ($.isNumeric(count) && count >= 0 && count < 5)) {
@@ -53,6 +57,7 @@ var Booking = React.createClass({
 		BookingActions.setDates(start, end);
 	},
 	render: function() {
+		// Rooms
 		var all_rooms = this.state.rooms;
 		var rooms = [];
 		for (var key in all_rooms) {
@@ -61,11 +66,34 @@ var Booking = React.createClass({
 				rooms.push(<Room key={key} selected={selected} room={all_rooms[key]} onClick={this.selectRoom}/>);
 			}
 		}
-
 		if (rooms.length == 0) {
 			rooms = <div className="none">Alas! No suitable room available.</div>;
 		}
 
+		// Upsells
+		var all_upsells = RoomStore.getUpsells(this.state.selected_room.Location.id);
+		console.log(all_upsells);
+		var upsells = [];
+		for (var key in all_upsells) {
+			var upsell = all_upsells[key];
+			var selected = false; // TODO
+			var dom_id = 'UpsellUpsell' + upsell.id;
+			var input =
+				<div className="checkbox">
+					<label htmlFor={dom_id} className="">
+					<input selected={selected} onClick={this.selectUpsell} type="checkbox" name="data[Upsell][Upsell][]" value={upsell.id} id={dom_id}/>
+					 {upsell.name}
+					</label>
+				</div>;
+			//var input = <Room key={key} selected={selected} room={all_rooms[key]} onClick={this.selectRoom}/>;
+			upsells.push(input);
+		}
+
+		if (upsells.length == 0) {
+			upsells = <div className="none">No addons available for selected room.</div>;
+		}
+
+		// Others
 		var selected_room = this.state.selected_room;
 		var total_price = selected_room.Price * this.state.nights_count * this.state.selected_beds;
 
@@ -166,10 +194,9 @@ var Booking = React.createClass({
 
 					<div className="form-group">
 						<label htmlFor="UpsellUpsell" className="col-sm-2 control-label">Addons</label>
-						<div className="col-sm-8 input-group">
+						<div className="col-sm-8 input-group upsells">
 							<input type="hidden" name="data[Upsell][Upsell]" value="" id="UpsellUpsell"/>
-							<div className="checkbox"><label htmlFor="UpsellUpsell2" className=""><input type="checkbox" name="data[Upsell][Upsell][]" value="2" id="UpsellUpsell2"/> internet via RJ45</label></div>
-							<div className="checkbox"><label htmlFor="UpsellUpsell1" className=""><input type="checkbox" name="data[Upsell][Upsell][]" value="1" id="UpsellUpsell1"/> breakfast</label></div>
+							{upsells}
 						</div>
 					</div>
 
