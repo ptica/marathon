@@ -18,6 +18,7 @@
  */
 	Router::connect('/', array('controller' => 'bookings', 'action' => 'add'));
 	Router::connect('/thank-you', array('controller' => 'pages', 'action' => 'display', 'thank-you'));
+	Router::connect('/edit/:token', array('controller' => 'bookings', 'action' => 'edit', 'token' => '[a-z0-9]+'), array('pass' => array('token')));
 	Router::connect('/admin', array('controller' => 'bookings', 'action' => 'index', 'admin'=>true));
 	Router::connect('/login', array('controller' => 'users', 'action' => 'login'));
 	Router::connect('/logout', array('controller' => 'users', 'action' => 'logout'));
