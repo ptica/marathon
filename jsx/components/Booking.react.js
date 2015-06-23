@@ -13,6 +13,7 @@ function getAppState() {
 		selected_price_type_id: 2, // other // not used now !!!
 		selected_beds: RoomStore.getSelectedBeds(),
 		nights_count: RoomStore.getNightsCount(),
+		selected_upsells: RoomStore.get_selected_upsells(),
 		booking_id: false,
 		payment_id: false,
 		email: 'email@example.com'
@@ -72,16 +73,16 @@ var Booking = React.createClass({
 
 		// Upsells
 		var all_upsells = RoomStore.getUpsells(this.state.selected_room.Location.id);
-		console.log(all_upsells);
+		var selected_upsells = this.state.selected_upsells;
 		var upsells = [];
 		for (var key in all_upsells) {
 			var upsell = all_upsells[key];
-			var selected = false; // TODO
+			var checked = (upsell.id in selected_upsells);
 			var dom_id = 'UpsellUpsell' + upsell.id;
 			var input =
 				<div className="checkbox" key={key}>
 					<label htmlFor={dom_id} className="">
-					<input selected={selected} onClick={this.selectUpsell} type="checkbox" name="data[Upsell][Upsell][]" value={upsell.id} id={dom_id}/>
+					<input checked={checked} onClick={this.selectUpsell} type="checkbox" name="data[Upsell][Upsell][]" value={upsell.id} id={dom_id}/>
 					 {upsell.name}
 					</label>
 				</div>;

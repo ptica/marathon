@@ -11,7 +11,9 @@ var _selected_room_id = null;
 var _selected_beds = 1;
 var _start = moment('7.9.2015', 'D.M.YYYY');
 var _end   = moment('12.9.2015', 'D.M.YYYY');
-var _upsells = {};
+var _upsells_by_location = {};
+var _upsells_by_id = {};
+var _selected_upsells = {};
 
 function receive_rooms(rooms) {
 	// Have just received ROOM list from the server API.
@@ -26,7 +28,15 @@ function receive_rooms(rooms) {
 
 function receive_upsells(upsells) {
 	// Have just received Upsell list from the server API.
-	_upsells = upsells;
+	_upsells_by_location = upsells;
+
+	// construct lookup table
+	for (var location_id in upsells) {
+		for (var key in upsells[location_id]) {
+			var id = upsells[location_id][key].id;
+			_upsells_by_id[id] = upsells[location_id][key];
+		}
+	}
 }
 
 function set_selected_room(room_id) {
@@ -42,6 +52,14 @@ function set_selected_nights(data) {
 	_end = moment(data.end, 'D.M.YYYY');
 }
 
+function set_selected_upsells(upsell_id) {
+	// toggle
+	if (_selected_upsells[upsell_id]) {
+		delete _selected_upsells[upsell_id];
+	} else {
+		_selected_upsells[upsell_id] = _upsells_by_id[upsell_id];
+	}
+}
 
 var RoomStore = assign({}, EventEmitter.prototype, {
 	/**
@@ -67,7 +85,11 @@ var RoomStore = assign({}, EventEmitter.prototype, {
 	},
 
 	getUpsells: function(location_id) {
-		return _upsells[location_id];
+		return _upsells_by_location[location_id];
+	},
+
+	get_selected_upsells: function() {
+		return _selected_upsells;
 	},
 
 	getStart: function() {
@@ -122,6 +144,11 @@ AppDispatcher.register(function(action) {
 
 		case BookingConstants.SET_NIGHTS:
 			set_selected_nights(action.data);
+			RoomStore.emitChange();
+			break;
+
+		case BookingConstants.ADD_UPSELL:
+			set_selected_upsells(action.data);
 			RoomStore.emitChange();
 			break;
 
