@@ -130,6 +130,7 @@ var Booking = React.createClass({
 						<input checked={checked} onClick={this.selectUpsell} type="checkbox" name="data[Upsell][Upsell][]" value={upsell.id} id={dom_id}/>
 						<div className="name">{upsell.name}</div>
 						<div className="price">+ {upsell.price} CZK <span className="notice">per bed per night</span></div>
+						<div className="desc" dangerouslySetInnerHTML={{__html:upsell.desc}}></div>
 					</label>
 				</div>;
 			upsells.push(input);

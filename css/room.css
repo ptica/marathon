@@ -68,6 +68,11 @@
     font-weight: normal;
     color: #cdcdcd;
 }
+.upsells .desc {
+    clear: both;
+    padding: 0px 0px 9px 0px;
+    font-size: 11px;
+}
 
 .totalPrice {
     font-size: 28px;
