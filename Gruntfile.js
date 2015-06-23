@@ -130,7 +130,7 @@ module.exports = function(grunt) {
 				src: [
 					'Vendor/bootstrap/dist/css/bootstrap.css',
 					'Vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
-					'css/*.css'
+					'css/**/*.css'
 				],
 				dest: 'webroot/css/site-admin.css',
 				nonull: true,

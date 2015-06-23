@@ -66,3 +66,29 @@ $('.list-group').each(function (i,e) {
         }
     });
 });
+
+
+App.fill = function () {
+	$('form.fill input').not('[data-provide="datepicker"]').each(function (i,e) {
+		var $e = $(e);
+		var id = $e.attr('id');
+		if (id) {
+			$e.val(id.replace('Booking', ''));
+		}
+	});
+	$('form.fill input[type="email"]').val('jan.ptacek@gmail.cz');
+	$('form.fill #BookingBeds').val(1);
+
+	var b;
+	b = moment('1.12.1970', 'D.M.YYYY');
+	b = moment('30.12.1975', 'D.M.YYYY');
+};
+
+$('form.fill .submit input').on('click', function (event) {
+	console.log('here!');
+	if (event.shiftKey) {
+		App.fill();
+		event.preventDefault();
+		return false;
+	}
+});

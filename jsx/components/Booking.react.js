@@ -161,18 +161,18 @@ var Booking = React.createClass({
 
 				<div className="row">
 				<div className="col-md-9">
-				<form action="/admin/bookings/add" role="form" className="form-horizontal" id="BookingAdminAddForm" method="post" acceptCharset="utf-8">
+				<form action="/" role="form" className="fill form-horizontal" id="BookingAdminAddForm" method="post" acceptCharset="utf-8">
 					<div className="form-group">
 						<label htmlFor="BookingFirstname" className="col-sm-2 control-label">First name</label>
 						<div className="col-sm-8 input-group">
-							<input ref="firstname" name="data[Booking][firstname]" className="form-control" placeholder="First name" maxLength="255" type="text" id="BookingSecondname" required="required"/>
+							<input ref="firstname" name="data[Booking][firstname]" className="form-control" placeholder="First name" maxLength="255" type="text" id="BookingFirstname" required="required"/>
 						</div>
 					</div>
 
 					<div className="form-group">
 						<label htmlFor="BookingLastname" className="col-sm-2 control-label">Last name</label>
 						<div className="col-sm-8 input-group">
-							<input ref="lastname" name="data[Booking][secondname]" className="form-control" placeholder="Last name" maxLength="255" type="text" id="BookingLastname" required="required"/>
+							<input ref="lastname" name="data[Booking][lastname]" className="form-control" placeholder="Last name" maxLength="255" type="text" id="BookingLastname" required="required"/>
 						</div>
 					</div>
 
@@ -252,6 +252,7 @@ var Booking = React.createClass({
 					<div className="form-group">
 						<label htmlFor="UpsellUpsell" className="col-sm-2 control-label">Total price</label>
 						<div className="col-sm-8 input-group totalPrice">{total_price} CZK</div>
+						<input type="hidden" name="data[Booking][web_price]" value="{total_price}" id="BookingWebPrice"/>
 					</div>
 
 					<div className="form-group">

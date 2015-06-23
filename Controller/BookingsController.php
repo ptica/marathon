@@ -11,6 +11,18 @@ class BookingsController extends AppController {
 		$this->Auth->allow('add');
 	}
 
+	public function add() {
+		if ($this->request->is('post')) {
+			$this->Booking->create();
+			if ($this->Booking->save($this->request->data)) {
+				$this->Session->setFlash(__('The booking has been saved.'), 'default', array('class' => 'alert alert-success'));
+				return $this->redirect('/thank-you');
+			} else {
+				$this->Session->setFlash(__('The booking could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
+			}
+		}
+	}
+
 	public function admin_index() {
 		$this->Booking->recursive = 0;
 		$this->Booking->Room->contain('Location');

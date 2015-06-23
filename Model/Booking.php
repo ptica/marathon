@@ -3,6 +3,8 @@ App::uses('AppModel', 'Model');
 class Booking extends AppModel {
 	public $displayField = 'email';
 
+	public $dateFields = array('start', 'end');
+
 	public $validate = array(
 		'room_id' => array(
 			'numeric' => array(
@@ -80,5 +82,7 @@ class Booking extends AppModel {
 			'finderQuery' => '',
 		)
 	);
+
+
 
 }

@@ -1,4 +1,4 @@
-<div class="bookings form">
+	<div class="bookings form">
 
 	<div class="row">
 		<div class="col-md-12">
@@ -20,6 +20,13 @@
 					</div><!-- end col md 3 -->
 		<div class="col-md-9">
 			<?php echo $this->Form->create('Booking', array('role'=>'form', 'class'=>'form-horizontal')); ?>
+				<div class="form-group">
+					<?php echo $this->Form->input('firstname', array('class'=>'form-control', 'placeholder'=>__('Firstname')));?>
+				</div>
+
+				<div class="form-group">
+					<?php echo $this->Form->input('lastname', array('class'=>'form-control', 'placeholder'=>__('Lastname')));?>
+				</div>
 
 				<div class="form-group">
 					<?php echo $this->Form->input('id', array('class'=>'form-control', 'placeholder'=>__('Id')));?>
@@ -43,6 +50,7 @@
 						'placeholder' => __('Start'),
 						'inputGroup' => array('append'=>'glyphicon-th'),
 						//BEWARE: datepicker needs JS initialization
+						'value' => $this->Time->format($this->data['Booking']['start'], '%-d.%-m.%Y')
 					));?>
 				</div>
 				<div class="form-group">
@@ -55,6 +63,7 @@
 						'placeholder' => __('End'),
 						'inputGroup' => array('append'=>'glyphicon-th'),
 						//BEWARE: datepicker needs JS initialization
+						'value' => $this->Time->format($this->data['Booking']['end'], '%-d.%-m.%Y')
 					));?>
 				</div>
 				<div class="form-group">

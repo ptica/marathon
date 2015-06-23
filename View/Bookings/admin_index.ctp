@@ -19,8 +19,9 @@
 			<table cellpadding="0" cellspacing="0" class="table table-striped">
 				<thead>
 					<tr>
+						<th><?php echo $this->Paginator->sort('firstname'); ?></th>
+						<th><?php echo $this->Paginator->sort('lastname'); ?></th>
 						<th><?php echo $this->Paginator->sort('room_id'); ?></th>
-						<th><?php echo $this->Paginator->sort('price_type_id'); ?></th>
 						<th><?php echo $this->Paginator->sort('beds'); ?></th>
 						<th><?php echo $this->Paginator->sort('start'); ?></th>
 						<th><?php echo $this->Paginator->sort('end'); ?></th>
@@ -32,13 +33,15 @@
 				<tbody>
 				<?php foreach ($bookings as $booking) { ?>
 					<tr>
-								<td>
-			<?php echo $this->Html->link($booking['Room']['name'], array('controller' => 'rooms', 'action' => 'view', $booking['Room']['id'])); ?>
-		</td>
-								<td>
-			<?php echo $this->Html->link($booking['PriceType']['name'], array('controller' => 'price_types', 'action' => 'view', $booking['PriceType']['id'])); ?>
-		</td>
-						<td><?php echo h($booking['Booking']['beds']); ?></td>
+						<td><?php echo h($booking['Booking']['firstname']); ?></td>
+						<td><?php echo h($booking['Booking']['lastname']); ?></td>
+						<td>
+							<?php echo $this->Html->link($booking['Room']['name'], array('controller' => 'rooms', 'action' => 'view', $booking['Room']['id'])); ?>
+						</td>
+						<!--td>
+							<?php echo $this->Html->link($booking['PriceType']['name'], array('controller' => 'price_types', 'action' => 'view', $booking['PriceType']['id'])); ?>
+						</td-->
+						<td class="c"><?php echo h($booking['Booking']['beds']); ?></td>
 						<td><?php echo $this->Time->format($booking['Booking']['start'], '%-d.%-m.&nbsp;%Y'); ?></td>
 						<td><?php echo $this->Time->format($booking['Booking']['end'], '%-d.%-m.&nbsp;%Y'); ?></td>
 						<td><?php echo h($booking['Booking']['email']); ?></td>

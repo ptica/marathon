@@ -24,7 +24,7 @@ var Room = React.createClass({
 		}
 		return (
 			<div className={className} onClick={this.onClick}>
-				<input checked={this.props.selected} ref={'room'+this.props.room.Room.id} type="checkbox" name="data[Room][id]" value={this.props.room.Room.id}/>
+				<input checked={this.props.selected} ref={'room'+this.props.room.Room.id} type="checkbox" name="data[Booking][room_id]" value={this.props.room.Room.id}/>
 				<h2>
 					<span>{this.props.room.Room.name}</span>
 					<span className="location"> @ {this.props.room.Location.name}</span>
