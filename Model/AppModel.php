@@ -58,7 +58,8 @@ class AppModel extends Model {
 	function beforeFind($query) {
 		// for every Room we JOIN Location
 		// NEW: except when we just want a list?
-		if ($this->Room && !@$query['list']) {
+		// NEW: except when we just want a field?
+		if ($this->Room && !@$query['list'] && !@$query['fields']) {
 			$query['joins'][] = array(
 				"table" => "locations",
 				"alias" => "Location",

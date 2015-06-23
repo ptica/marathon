@@ -76,7 +76,7 @@ App.fill = function () {
 			$e.val(id.replace('Booking', ''));
 		}
 	});
-	$('form.fill input[type="email"]').val('jan.ptacek@gmail.cz');
+	$('form.fill input[type="email"]').val('jan.ptacek@gmail.com');
 	$('form.fill #BookingBeds').val(1);
 
 	var b;

@@ -1,5 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('CakeEmail', 'Network/Email');
+
 class BookingsController extends AppController {
 	public $layout = 'BootstrapCake.bootstrap';
 
@@ -15,6 +17,7 @@ class BookingsController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Booking->create();
 			if ($this->Booking->save($this->request->data)) {
+				$this->email_add_notice();
 				$this->Session->setFlash(__('The booking has been saved.'), 'default', array('class' => 'alert alert-success'));
 				return $this->redirect('/thank-you');
 			} else {
@@ -86,5 +89,18 @@ class BookingsController extends AppController {
 			$this->Session->setFlash(__('The booking could not be deleted. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
 		}
 		return $this->redirect(array('action' => 'index'));
+	}
+
+	private function email_add_notice() {
+		$content = array();
+		$content[] = 'Thank you for registration!';
+		$content[] = '';
+		$content[] = Router::url('/admin/bookings/edit/' . $this->Booking->id, true);
+		$owner_mail = $this->Booking->field('email');
+		$to = array($owner_mail);
+
+		$Email = new CakeEmail('default');
+		$Email->to($to);
+		$Email->send($content);
 	}
 }
