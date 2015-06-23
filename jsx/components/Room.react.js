@@ -29,9 +29,7 @@ var Room = React.createClass({
 					<span>{this.props.room.Room.name}</span>
 					<span className="location"> @ {this.props.room.Location.name}</span>
 				</h2>
-				<p>
-					{this.props.room.Location.desc}
-				</p>
+				<p dangerouslySetInnerHTML={{__html:this.props.room.Location.desc}}></p>
 				<div className="price">
 					<span>{this.props.room.Price} CZK</span>
 					<span className="notice">per bed per night</span>
