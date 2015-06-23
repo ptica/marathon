@@ -23,6 +23,7 @@
     float:left;
     margin-top: 12px;
     zoom: 2;
+    -moz-transform: scale(2);
 }
 
 .rooms .room .price {
@@ -56,13 +57,13 @@
     display: block;
 }
 .upsells .checkbox .name {
-    float: left;
 }
 .upsells .checkbox .price {
     float: right;
     font-size: 12px;
     font-weight: bold;
     text-align: right;
+    margin-top: 3px;
 }
 .upsells .notice {
     font-weight: normal;
