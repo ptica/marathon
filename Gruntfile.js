@@ -113,6 +113,8 @@ module.exports = function(grunt) {
 					'Vendor/bootbox.js/bootbox.js',
 					'Vendor/Sortable/Sortable.js',
 					'Vendor/moment/moment.js',
+					//'Vendor/moment/locale/cs.js',
+					'Vendor/moment/locale/en-gb.js',
 					'Vendor/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js',
 					//'dist/jsx-combined.js',
 					'dist/browserify-bundle.js',

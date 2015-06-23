@@ -2,7 +2,8 @@
 $('input[data-provide=datepicker]').datetimepicker({
     format: 'D.M.YYYY',
     minDate: '2015-09-02',
-    maxDate: '2015-09-13'
+    maxDate: '2015-09-13',
+    locale: 'en_GB'
 })
 .next().click(function() {
         // clicking an input-group-addon (next sibling)
