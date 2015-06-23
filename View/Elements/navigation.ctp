@@ -30,10 +30,15 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->Session->read('Auth.User.username'); ?> <span class="caret"></span></a>
 							<ul class="dropdown-menu">
+								<li> <a href="<?php echo Router::url('/admin/locations');?>"><?php echo __("Config"); ?></a> </li>
 								<li class="divider"></li>
 								<li> <a href="<?php echo Router::url('/logout');?>"><?php echo __("Logout"); ?></a> </li>
 							</ul>
 						</li>
+					</ul>
+				<?php } else { ?>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="<?php echo Router::url('/admin');?>"><?php echo __("admin"); ?></a></li>
 					</ul>
 				<?php } ?>
 			</div>
