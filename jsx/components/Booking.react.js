@@ -187,7 +187,7 @@ var Booking = React.createClass({
 						<label htmlFor="BookingStart" className="col-sm-2 control-label">Arrival</label>
 						<div className="col-sm-8 input-group">
 							<div className="input-group">
-								<input ref="start" onChange={this.countNights} defaultValue="7.9.2015" name="data[Booking][start]" className="form-control" data-provide="datepicker" placeholder="Start" type="text" id="BookingStart"/>
+								<input ref="start" onChange={this.countNights} defaultValue="6.9.2015" name="data[Booking][start]" className="form-control" data-provide="datepicker" placeholder="Start" type="text" id="BookingStart"/>
 								<span className="input-group-addon"><i className="glyphicon glyphicon-th"></i></span>
 							</div>
 						</div>
@@ -197,7 +197,7 @@ var Booking = React.createClass({
 						<label htmlFor="BookingEnd" className="col-sm-2 control-label">Departure</label>
 						<div className="col-sm-8 input-group">
 							<div className="input-group">
-								<input ref="end" onChange={this.countNights} defaultValue="12.9.2015" name="data[Booking][end]" className="form-control" data-provide="datepicker" placeholder="End" type="text" id="BookingEnd"/>
+								<input ref="end" onChange={this.countNights} defaultValue="13.9.2015" name="data[Booking][end]" className="form-control" data-provide="datepicker" placeholder="End" type="text" id="BookingEnd"/>
 								<span className="input-group-addon"><i className="glyphicon glyphicon-th"></i></span>
 							</div>
 						</div>
