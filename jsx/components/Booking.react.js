@@ -252,7 +252,7 @@ var Booking = React.createClass({
 					<div className="form-group">
 						<label htmlFor="UpsellUpsell" className="col-sm-2 control-label">Total price</label>
 						<div className="col-sm-8 input-group totalPrice">{total_price} CZK</div>
-						<input type="hidden" name="data[Booking][web_price]" value="{total_price}" id="BookingWebPrice"/>
+						<input type="hidden" name="data[Booking][web_price]" value={total_price} id="BookingWebPrice"/>
 					</div>
 
 					<div className="form-group">

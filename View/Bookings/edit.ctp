@@ -71,7 +71,7 @@
 					<?php echo $this->Form->input('Upsell', array('disabled'=>'disabled', 'label'=>'Addons', 'class'=>'form-control', 'placeholder'=>__('Upsell')));?>
 				</div>
 				<div class="form-group">
-					<?php echo $this->Form->input('web_price', array('disabled'=>'disabled', 'label'=>'Price', 'class'=>'form-control', 'placeholder'=>__('Price')));?>
+					<?php echo $this->Form->input('web_price', array('type'=>'text', 'value' => $this->data['Booking']['web_price'] . ' CZK', 'disabled'=>'disabled', 'label'=>'Price', 'class'=>'form-control', 'placeholder'=>__('Price')));?>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-8">
