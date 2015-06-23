@@ -79,7 +79,7 @@ var Booking = React.createClass({
 			var selected = false; // TODO
 			var dom_id = 'UpsellUpsell' + upsell.id;
 			var input =
-				<div className="checkbox">
+				<div className="checkbox" key={key}>
 					<label htmlFor={dom_id} className="">
 					<input selected={selected} onClick={this.selectUpsell} type="checkbox" name="data[Upsell][Upsell][]" value={upsell.id} id={dom_id}/>
 					 {upsell.name}
