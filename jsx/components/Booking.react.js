@@ -40,8 +40,8 @@ var Booking = React.createClass({
 	},
 	selectBeds: function (e) {
 		var count = e.target.value;
-		if ($.isNumeric(count) && count >= 0 && count < 5) {
-			BookingActions.selectBeds(e.target.value);
+		if (count === '' || ($.isNumeric(count) && count >= 0 && count < 5)) {
+			BookingActions.selectBeds(count);
 		} else {
 			// to reset the input
 			this.forceUpdate();
@@ -146,7 +146,7 @@ var Booking = React.createClass({
 					<div className="form-group">
 						<label htmlFor="BookingBeds" className="col-sm-2 control-label">Beds</label>
 						<div className="col-sm-8 input-group">
-							<input ref="beds" value={this.state.selected_beds} onChange={this.selectBeds} name="data[Booking][beds]" className="form-control" placeholder="Beds" type="number" id="BookingBeds" required="required"/>
+							<input ref="beds" value={this.state.selected_beds} onChange={this.selectBeds} name="data[Booking][beds]" className="form-control" placeholder="Beds" type="tel" id="BookingBeds" required="required"/>
 						</div>
 					</div>
 
