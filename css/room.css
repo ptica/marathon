@@ -52,6 +52,23 @@
     padding-left: 12px;
 }
 
+.upsells .checkbox label {
+    display: block;
+}
+.upsells .checkbox .name {
+    float: left;
+}
+.upsells .checkbox .price {
+    float: right;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: right;
+}
+.upsells .notice {
+    font-weight: normal;
+    color: #cdcdcd;
+}
+
 .totalPrice {
     font-size: 28px;
     font-weight: bold;

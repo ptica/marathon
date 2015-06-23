@@ -4,6 +4,40 @@ var Room = require('./Room.react');
 var BookingActions = require('../actions/BookingActions');
 
 /**
+* Decimal adjustment of a number.
+*
+* @param {String}  type  The type of adjustment.
+* @param {Number}  value The number.
+* @param {Integer} exp   The exponent (the 10 logarithm of the adjustment base).
+* @returns {Number} The adjusted value.
+*/
+function decimalAdjust(type, value, exp) {
+	// If the exp is undefined or zero...
+	if (typeof exp === 'undefined' || +exp === 0) {
+	  return Math[type](value);
+	}
+	value = +value;
+	exp = +exp;
+	// If the value is not a number or the exp is not an integer...
+	if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+	  return NaN;
+	}
+	// Shift
+	value = value.toString().split('e');
+	value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+	// Shift back
+	value = value.toString().split('e');
+	return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+}
+
+// Decimal round
+if (!Math.round10) {
+	Math.round10 = function(value, exp) {
+	  return decimalAdjust('round', value, exp);
+	};
+}
+
+/**
  * Retrieve the current data from the RoomStore
  */
 function getAppState() {
@@ -57,6 +91,17 @@ var Booking = React.createClass({
 		var end = this.refs.end.getDOMNode().value;
 		BookingActions.setDates(start, end);
 	},
+	get_selected_upsells_price: function () {
+		var price = 0;
+		var all_upsells = RoomStore.getUpsells(this.state.selected_room.Location.id);
+		for (var key in all_upsells) {
+			var upsell = all_upsells[key];
+			if (upsell.id in this.state.selected_upsells) {
+				price += upsell.price * this.state.nights_count * this.state.selected_beds;
+			}
+		}
+		return price;
+	},
 	render: function() {
 		// Rooms
 		var all_rooms = this.state.rooms;
@@ -82,11 +127,11 @@ var Booking = React.createClass({
 			var input =
 				<div className="checkbox" key={key}>
 					<label htmlFor={dom_id} className="">
-					<input checked={checked} onClick={this.selectUpsell} type="checkbox" name="data[Upsell][Upsell][]" value={upsell.id} id={dom_id}/>
-					 {upsell.name}
+						<input checked={checked} onClick={this.selectUpsell} type="checkbox" name="data[Upsell][Upsell][]" value={upsell.id} id={dom_id}/>
+						<div className="name">{upsell.name}</div>
+						<div className="price">+ {upsell.price} CZK <span className="notice">per bed per night</span></div>
 					</label>
 				</div>;
-			//var input = <Room key={key} selected={selected} room={all_rooms[key]} onClick={this.selectRoom}/>;
 			upsells.push(input);
 		}
 
@@ -96,7 +141,9 @@ var Booking = React.createClass({
 
 		// Others
 		var selected_room = this.state.selected_room;
-		var total_price = selected_room.Price * this.state.nights_count * this.state.selected_beds;
+		var room_price  = selected_room.Price * this.state.nights_count * this.state.selected_beds;
+		var upsell_price = this.get_selected_upsells_price();
+		var total_price = Math.round10(room_price + upsell_price, -2).toFixed(2);
 
 		return (
 			<div>
