@@ -151,7 +151,7 @@ class BookingsController extends AppController {
 
 	private function email_add_notice() {
 		$content = array();
-		$content[] = 'Thank you for registration!';
+		$content[] = 'Thank you for your registration!';
 		$content[] = '';
 		$content[] = 'You may review your registration details at:';
 		$content[] = Router::url('/edit/' . $this->Booking->field('token'), true);
