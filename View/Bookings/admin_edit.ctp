@@ -78,7 +78,13 @@
 					<?php echo $this->Form->input('fellow_email', array('class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
 				</div>
 				<div class="form-group">
-					<?php echo $this->Form->input('Upsell', array('class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
+					<?php echo $this->Form->input('Upsell', array('multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
+				</div>
+				<div class="form-group">
+					<?php echo $this->Form->input('Meal', array('multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Meals')));?>
+				</div>
+				<div class="form-group">
+					<?php echo $this->Form->input('Query', array('multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Queries')));?>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-8">

@@ -121,7 +121,9 @@ class BookingsController extends AppController {
 		$rooms = $this->Booking->Room->find('list');
 		$priceTypes = $this->Booking->PriceType->find('list');
 		$upsells = $this->Booking->Upsell->find('list');
-		$this->set(compact('rooms', 'priceTypes', 'upsells'));
+		$meals = $this->Booking->Meal->find('list');
+		$queries = $this->Booking->Query->find('list');
+		$this->set(compact('rooms', 'priceTypes', 'upsells', 'meals', 'queries'));
 	}
 
 	public function admin_delete($id = null) {
