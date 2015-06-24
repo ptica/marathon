@@ -9,6 +9,8 @@ module.exports = {
 			data = JSON.parse(data);
 			BookingActions.receiveRooms(data.rooms);
 			BookingActions.receiveUpsells(data.upsells);
+			BookingActions.receiveMeals(data.meals);
+			BookingActions.receiveQueries(data.queries);
 		});
 	}
 };

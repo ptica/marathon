@@ -48,6 +48,8 @@ function getAppState() {
 		selected_beds: RoomStore.getSelectedBeds(),
 		nights_count: RoomStore.getNightsCount(),
 		selected_upsells: RoomStore.get_selected_upsells(),
+		selected_meals: RoomStore.get_selected_meals(),
+		selected_queries: RoomStore.get_selected_queries(),
 		booking_id: false,
 		payment_id: false,
 		email: 'email@example.com'
@@ -77,6 +79,14 @@ var Booking = React.createClass({
 		var upsell_id = e.target.value;
 		BookingActions.selectUpsell(upsell_id);
 	},
+	selectMeal: function (e) {
+		var id = e.target.value;
+		BookingActions.selectMeal(id);
+	},
+	selectQuery: function (e) {
+		var id = e.target.value;
+		BookingActions.selectQuery(id);
+	},
 	selectBeds: function (e) {
 		var count = e.target.value;
 		if (count === '' || ($.isNumeric(count) && count >= 0 && count < 5)) {
@@ -98,6 +108,17 @@ var Booking = React.createClass({
 			var upsell = all_upsells[key];
 			if (upsell.id in this.state.selected_upsells) {
 				price += upsell.price * this.state.nights_count * this.state.selected_beds;
+			}
+		}
+		return price;
+	},
+	get_selected_meals_price: function () {
+		var price = 0;
+		var all_meals = RoomStore.getMeals();
+		for (var key in all_meals) {
+			var meal = all_meals[key];
+			if (meal.id in this.state.selected_meals) {
+				price += 1 * meal.price;
 			}
 		}
 		return price;
@@ -135,16 +156,60 @@ var Booking = React.createClass({
 				</div>;
 			upsells.push(input);
 		}
-
 		if (upsells.length == 0) {
 			upsells = <div className="none">No addons available for selected room.</div>;
 		}
+
+		// Meals
+		var all_meals = RoomStore.getMeals();
+		var selected_meals = this.state.selected_meals;
+		var meals = [];
+		for (var key in all_meals) {
+			var meal = all_meals[key];
+			var checked = (meal.id in selected_meals);
+			var dom_id = 'MealMeal' + meal.id;
+			var input =
+				<div className="checkbox" key={key}>
+					<label htmlFor={dom_id} className="">
+						<input checked={checked} onClick={this.selectMeal} type="checkbox" name="data[Meal][Meal][]" value={meal.id} id={dom_id}/>
+						<div className="name">{meal.name}</div>
+					</label>
+				</div>;
+			if (meal.price === "0.00") meals.push(<hr key="hr"/>);
+			meals.push(input);
+		}
+		if (meals.length == 0) {
+			meals = <div className="none">No meals available.</div>;
+		}
+
+		// Queries
+		var all_queries = RoomStore.getQueries();
+		var selected_queries = this.state.selected_queries;
+		var queries = [];
+		for (var key in all_queries) {
+			var query = all_queries[key];
+			var checked = (query.id in selected_queries);
+			var dom_id = 'QueryQuery' + query.id;
+			var input =
+				<div className="checkbox" key={key}>
+					<label htmlFor={dom_id} className="">
+						<input checked={checked} onClick={this.selectQuery} type="checkbox" name="data[Query][Query][]" value={query.id} id={dom_id}/>
+						<div className="name">{query.query}</div>
+					</label>
+				</div>;
+			queries.push(input);
+		}
+		if (queries.length == 0) {
+			queries = <div className="none">No content available.</div>;
+		}
+
 
 		// Others
 		var selected_room = this.state.selected_room;
 		var room_price  = selected_room.Price * this.state.nights_count * this.state.selected_beds;
 		var upsell_price = this.get_selected_upsells_price();
-		var total_price = Math.round10(room_price + upsell_price, -2).toFixed(2);
+		var meal_price = this.get_selected_meals_price();
+		var total_price = Math.round10(room_price + upsell_price + meal_price, -2).toFixed(2);
 
 		return (
 			<div>
@@ -172,9 +237,7 @@ var Booking = React.createClass({
 						<label htmlFor="QueryQuery" className="col-sm-2 control-label">MTM Content</label>
 						<div className="col-sm-8 input-group">
 							<input type="hidden" name="data[Query][Query]" defaultValue id="QueryQuery" />
-							<div className="checkbox">
-								<label htmlFor="QueryQuery1" className><input type="checkbox" name="data[Query][Query][]" defaultValue={1} id="QueryQuery1" />  Introductory lectures to machine translation (early morning). </label>
-							</div>
+							{queries}
 						</div>
 					</div>
 
@@ -284,14 +347,9 @@ for your printed receipt:
 
 					<div className="form-group">
 						<label htmlFor="MealMeal" className="col-sm-2 control-label">Meals</label>
-						<div className="col-sm-8 input-group">
+						<div className="col-sm-8 input-group meals">
 							<input type="hidden" name="data[Meal][Meal]" defaultValue id="MealMeal" />
-							<div className="checkbox">
-								<label htmlFor="MealMeal1" className><input type="checkbox" name="data[Meal][Meal][]" defaultValue={1} id="MealMeal1" /> Mon 7.9.</label>
-							</div>
-							<div className="checkbox">
-								<label htmlFor="MealMeal7" className><input type="checkbox" name="data[Meal][Meal][]" defaultValue={7} id="MealMeal7" /> I need vegetarian meals.</label>
-							</div>
+							{meals}
 						</div>
 					</div>
 

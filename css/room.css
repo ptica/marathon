@@ -44,6 +44,8 @@
     text-align: center;
 }
 
+.meals .none,
+.queries .none,
 .upsells .none,
 .rooms .none {
     line-height: 22px;
@@ -79,4 +81,9 @@
     font-size: 28px;
     font-weight: bold;
     padding-left: 12px!important;
+}
+
+.meals hr {
+    margin-top: 11px;
+    margin-bottom: 3px;
 }

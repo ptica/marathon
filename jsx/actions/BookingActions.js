@@ -16,6 +16,20 @@ var BookingActions = {
 			data: upsells
 		});
 	},
+	// Meals list has just arrived!
+	receiveMeals: function(meals) {
+		AppDispatcher.dispatch({
+			actionType: BookingConstants.RECEIVE_MEALS,
+			data: meals
+		});
+	},
+	// Queries list has just arrived!
+	receiveQueries: function(queries) {
+		AppDispatcher.dispatch({
+			actionType: BookingConstants.RECEIVE_QUERIES,
+			data: queries
+		});
+	},
 	// Set currently selected room_id
 	selectRoom: function(room_id) {
 		AppDispatcher.dispatch({
@@ -27,6 +41,18 @@ var BookingActions = {
 		AppDispatcher.dispatch({
 			actionType: BookingConstants.ADD_UPSELL,
 			data: upsell_id
+		});
+	},
+	selectMeal: function(id) {
+		AppDispatcher.dispatch({
+			actionType: BookingConstants.ADD_MEAL,
+			data: id
+		});
+	},
+	selectQuery: function(id) {
+		AppDispatcher.dispatch({
+			actionType: BookingConstants.ADD_QUERY,
+			data: id
 		});
 	},
 	//

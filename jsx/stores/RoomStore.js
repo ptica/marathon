@@ -14,6 +14,10 @@ var _end   = moment('13.9.2015', 'D.M.YYYY');
 var _upsells_by_location = {};
 var _upsells_by_id = {};
 var _selected_upsells = {};
+var _meals = {};
+var _queries = {};
+var _selected_meals = {};
+var _selected_queries = {};
 
 function receive_rooms(rooms) {
 	// Have just received ROOM list from the server API.
@@ -39,6 +43,16 @@ function receive_upsells(upsells) {
 	}
 }
 
+function receive_meals(meals) {
+	// Have just received Meals list from the server API.
+	_meals = meals;
+}
+
+function receive_queries(queries) {
+	// Have just received Queries list from the server API.
+	_queries = queries;
+}
+
 function set_selected_room(room_id) {
 	_selected_room_id = room_id;
 }
@@ -58,6 +72,22 @@ function set_selected_upsells(upsell_id) {
 		delete _selected_upsells[upsell_id];
 	} else {
 		_selected_upsells[upsell_id] = _upsells_by_id[upsell_id];
+	}
+}
+function set_selected_meals(meal_id) {
+	// toggle
+	if (_selected_meals[meal_id]) {
+		delete _selected_meals[meal_id];
+	} else {
+		_selected_meals[meal_id] = _meals[meal_id];
+	}
+}
+function set_selected_queries(query_id) {
+	// toggle
+	if (_selected_queries[query_id]) {
+		delete _selected_queries[query_id];
+	} else {
+		_selected_queries[query_id] = _queries[query_id];
 	}
 }
 
@@ -88,8 +118,22 @@ var RoomStore = assign({}, EventEmitter.prototype, {
 		return _upsells_by_location[location_id];
 	},
 
+	getMeals: function() {
+		return _meals;
+	},
+
+	getQueries: function() {
+		return _queries;
+	},
+
 	get_selected_upsells: function() {
 		return _selected_upsells;
+	},
+	get_selected_meals: function() {
+		return _selected_meals;
+	},
+	get_selected_queries: function() {
+		return _selected_queries;
 	},
 
 	getStart: function() {
@@ -132,6 +176,16 @@ AppDispatcher.register(function(action) {
 			RoomStore.emitChange();
 			break;
 
+		case BookingConstants.RECEIVE_MEALS:
+			receive_meals(action.data);
+			RoomStore.emitChange();
+			break;
+
+		case BookingConstants.RECEIVE_QUERIES:
+			receive_queries(action.data);
+			RoomStore.emitChange();
+			break;
+
 		case BookingConstants.SET_SELECTED:
 			set_selected_room(action.data);
 			RoomStore.emitChange();
@@ -149,6 +203,16 @@ AppDispatcher.register(function(action) {
 
 		case BookingConstants.ADD_UPSELL:
 			set_selected_upsells(action.data);
+			RoomStore.emitChange();
+			break;
+
+		case BookingConstants.ADD_MEAL:
+			set_selected_meals(action.data);
+			RoomStore.emitChange();
+			break;
+
+		case BookingConstants.ADD_QUERY:
+			set_selected_queries(action.data);
 			RoomStore.emitChange();
 			break;
 
