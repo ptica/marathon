@@ -22,9 +22,9 @@
 		App.session_locale = '<?php echo Configure::read('Config.language'); ?>';
 	</script>
 
-	<link rel="stylesheet" href="<?php echo "/css/site-admin.css?$version" ?>" type="text/css" media="screen">
+	<link rel="stylesheet" href="<?php echo Configure::read('App.base') . "/css/site-admin.css?$version" ?>" type="text/css" media="screen">
 	<?php //echo $this->Html->css("print.css?$version", 'stylesheet', array('media' => 'print')); ?>
-	<script src="<?php echo "/js/site-pre.js?$version"; ?>" type="text/javascript"></script>
+	<script src="<?php echo Configure::read('App.base') . "/js/site-pre.js?$version"; ?>" type="text/javascript"></script>
 
 	<!--[if lt IE 8]>
 	<div style=' clear: both; text-align:center; position: relative;'>
@@ -37,8 +37,8 @@
  		<script type="text/javascript" src="js/html5.js"></script>
 		<link rel="stylesheet" href="css/ie.css" type="text/css" media="screen">
 	<![endif]-->
-	<link rel="shortcut icon" href="/favicon.ico?6">
-	<link href="/favicon.ico?6" type="image/x-icon" rel="shortcut icon">
+	<link rel="shortcut icon" href="<?php echo Configure::read('App.base'); ?>/favicon.ico?6">
+	<link href="<?php echo Configure::read('App.base'); ?>/favicon.ico?6" type="image/x-icon" rel="shortcut icon">
 	<?php
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
@@ -73,6 +73,6 @@
 		</div>
 	</div>
 
-	<script src="<?php echo "/js/site-post.js?$version"; ?>" type="text/javascript"></script>
+	<script src="<?php echo Configure::read('App.base') . "/js/site-post.js?$version"; ?>" type="text/javascript"></script>
 </body>
 </html>
