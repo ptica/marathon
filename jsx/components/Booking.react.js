@@ -201,9 +201,14 @@ var Booking = React.createClass({
 			var meal = all_meals[key];
 			var checked = (meal.id in selected_meals);
 			var dom_id = 'MealMeal' + meal.id;
+			var price_box = '';
+			if (meal.price !== "0.00") {
+				price_box = <div className="price">+ {meal.price} CZK <span className="notice"></span></div>;
+			}
 			var input =
 				<div className="checkbox" key={key}>
 					<label htmlFor={dom_id} className="">
+						{price_box}
 						<input checked={checked} onClick={this.selectMeal} type="checkbox" name="data[Meal][Meal][]" value={meal.id} id={dom_id}/>
 						<div className="name">{meal.name}</div>
 					</label>
@@ -379,7 +384,15 @@ for your printed receipt:
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="MealMeal" className="col-sm-2 control-label">Meals</label>
+						<label htmlFor="QueryQuery" className="col-sm-2 control-label">Lunches</label>
+						<div className="col-sm-8 input-group">
+							<p className="form-control-static">You (the registrant) may want lunches at the conference venue on the following MT Marathon days (Sept 7-Sept 12):</p>
+							<p className="form-control-static">Price is per lunch (includes soup, main dish, dessert and drink).</p>
+						</div>
+					</div>
+
+					<div className="form-group">
+						<label htmlFor="MealMeal" className="col-sm-2 control-label"></label>
 						<div className="col-sm-8 input-group meals">
 							<input type="hidden" name="data[Meal][Meal]" defaultValue id="MealMeal" />
 							{meals}

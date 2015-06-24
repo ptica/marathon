@@ -55,11 +55,13 @@
     padding-left: 12px;
 }
 
+.meals .checkbox label,
 .upsells .checkbox label {
     display: block;
 }
 .upsells .checkbox .name {
 }
+.meals .checkbox .price,
 .upsells .checkbox .price {
     float: right;
     font-size: 12px;
@@ -67,6 +69,7 @@
     text-align: right;
     margin-top: 3px;
 }
+.meals .notice,
 .upsells .notice {
     font-weight: normal;
     color: #cdcdcd;
