@@ -2,7 +2,7 @@
 App::uses('AppModel', 'Model');
 
 class Room extends AppModel {
-	public $displayField = 'fullname';
+	public $displayField = 'name';
 
 	public $dateFields  = array('start', 'end');
 
