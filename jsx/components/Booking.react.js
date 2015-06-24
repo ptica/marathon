@@ -163,6 +163,22 @@ var Booking = React.createClass({
 				<div className="col-md-9">
 				<form action="/" role="form" className="fill form-horizontal" id="BookingAdminAddForm" method="post" acceptCharset="utf-8">
 					<div className="form-group">
+						<label htmlFor="QueryQuery" className="col-sm-2 control-label"></label>
+						<div className="col-sm-8 input-group">
+							<p className="form-control-static">To help us allocate the rooms accordingly, please indicate which sections of MT Marathon do you plan to attend:</p>
+						</div>
+					</div>
+					<div className="form-group">
+						<label htmlFor="QueryQuery" className="col-sm-2 control-label">MTM Content</label>
+						<div className="col-sm-8 input-group">
+							<input type="hidden" name="data[Query][Query]" defaultValue id="QueryQuery" />
+							<div className="checkbox">
+								<label htmlFor="QueryQuery1" className><input type="checkbox" name="data[Query][Query][]" defaultValue={1} id="QueryQuery1" />  Introductory lectures to machine translation (early morning). </label>
+							</div>
+						</div>
+					</div>
+
+					<div className="form-group">
 						<label htmlFor="BookingName" className="col-sm-2 control-label">Your name</label>
 						<div className="col-sm-8 input-group">
 							<input ref="firstname" name="data[Booking][name]" className="form-control" placeholder="Your name" maxLength="255" type="text" id="BookingName" required="required"/>
@@ -263,6 +279,19 @@ for your printed receipt:
 						<div className="col-sm-8 input-group upsells">
 							<input type="hidden" name="data[Upsell][Upsell]" value="" id="UpsellUpsell"/>
 							{upsells}
+						</div>
+					</div>
+
+					<div className="form-group">
+						<label htmlFor="MealMeal" className="col-sm-2 control-label">Meals</label>
+						<div className="col-sm-8 input-group">
+							<input type="hidden" name="data[Meal][Meal]" defaultValue id="MealMeal" />
+							<div className="checkbox">
+								<label htmlFor="MealMeal1" className><input type="checkbox" name="data[Meal][Meal][]" defaultValue={1} id="MealMeal1" /> Mon 7.9.</label>
+							</div>
+							<div className="checkbox">
+								<label htmlFor="MealMeal7" className><input type="checkbox" name="data[Meal][Meal][]" defaultValue={7} id="MealMeal7" /> I need vegetarian meals.</label>
+							</div>
 						</div>
 					</div>
 
