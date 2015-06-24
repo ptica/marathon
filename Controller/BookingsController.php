@@ -37,8 +37,10 @@ class BookingsController extends AppController {
 		$id = $booking['Booking']['id'];
 		if ($this->request->is(array('post', 'put'))) {
 			$allowed_fields = array(
-				'firstname' => 1,
-				'lastname' => 1,
+				'name' => 1,
+				'institution' => 1,
+				'country' => 1,
+				'address' => 1,
 				'email' => 1,
 				'fellow_email' => 1,
 			);
