@@ -84,9 +84,20 @@
     font-size: 28px;
     font-weight: bold;
     padding-left: 12px!important;
+    text-align: right;
+}
+
+.totalPriceDiv {
+    margin-top: 75px;
 }
 
 .meals hr {
     margin-top: 11px;
     margin-bottom: 3px;
+}
+
+#BookingAdminAddForm input[type="submit"] {
+    width: 100%;
+    margin-top: 25px;
+    margin-bottom: 75px;
 }

@@ -174,7 +174,7 @@ var Booking = React.createClass({
 		var all_upsells = RoomStore.getUpsells(this.state.selected_room.Location.id);
 		var selected_upsells = this.state.selected_upsells;
 		var upsells = [];
-		for (var key in all_upsells) {
+		if (this.state.selected_room.Room.id in suitable_rooms) for (var key in all_upsells) {
 			var upsell = all_upsells[key];
 			var checked = (upsell.id in selected_upsells);
 			var dom_id = 'UpsellUpsell' + upsell.id;
@@ -399,7 +399,7 @@ for your printed receipt:
 						</div>
 					</div>
 
-					<div className="form-group">
+					<div className="form-group totalPriceDiv">
 						<label htmlFor="UpsellUpsell" className="col-sm-2 control-label">Total price</label>
 						<div className="col-sm-8 input-group totalPrice"><span className="glyphicon glyphicon-tag"></span>&nbsp;&nbsp;{total_price} CZK</div>
 						<input type="hidden" name="data[Booking][web_price]" value={total_price} id="BookingWebPrice"/>
@@ -408,7 +408,7 @@ for your printed receipt:
 					<div className="form-group">
 						<div className="col-sm-offset-2 col-sm-8">
 							<div className="submit">
-								<input className="btn btn-primary" type="submit" value="Register!"/>
+								<input className="btn btn-primary btn-lg" type="submit" value="Register!"/>
 							</div>
 						</div>
 					</div>
