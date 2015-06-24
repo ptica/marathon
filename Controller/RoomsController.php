@@ -10,7 +10,7 @@ class RoomsController extends AppController {
 	// declare public actions
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('get');
+		$this->Auth->allow('get', 'check');
 	}
 
 	public function get() {
@@ -27,6 +27,8 @@ class RoomsController extends AppController {
 			//$conditions['start >='] = date('Y-m-01', strtotime("-1 month"));
 			//$conditions['end <']    = date('Y-m-t', strtotime("+5 month"));
 		}
+
+		$conditions['amount_left >'] = 0;
 
 		$this->Room->contain(array(
 			'Location',
@@ -67,6 +69,28 @@ class RoomsController extends AppController {
 		return new CakeResponse(array('body'=>json_encode($res)));
 	}
 
+	public function check($room_id=null, $beds=null, $start=null, $end=null) {
+		$room_id = (int) $room_id;
+		$beds = (int) $beds;
+		$conditions = array(
+			'Room.id' => $room_id,
+			'Room.beds >=' => $beds,
+			'Room.start <=' => $start,
+			'Room.end >=' => $end,
+			'Room.amount_left >' => 0
+		);
+		// do not localize dates now so we can do comparison !!!!
+		// TODO rethink the dates virtualFields localization after all
+		$this->Room->virtualFields['start'] = 'Room.start';
+		$this->Room->virtualFields['end']   = 'Room.end';
+		$room = $this->Room->find('first', compact(array('conditions')));
+
+		if ($room) {
+			return new CakeResponse(array('body'=>'OK'));
+		} else {
+			return new CakeResponse(array('body'=>'NOK'));
+		}
+	}
 
 	public function admin_index() {
 		$this->Room->recursive = 0;

@@ -59,7 +59,8 @@ class AppModel extends Model {
 		// for every Room we JOIN Location
 		// NEW: except when we just want a list?
 		// NEW: except when we just want a field?
-		if ($this->Room && !@$query['list'] && !@$query['fields']) {
+		// DISABLED NOW as it joins in unwanted situations as well
+		if (0 && $this->Room && !@$query['list'] && !@$query['fields']) {
 			$query['joins'][] = array(
 				"table" => "locations",
 				"alias" => "Location",
@@ -68,7 +69,7 @@ class AppModel extends Model {
 			);
 		}
 		// for every Room->find('list') we upgrade the recursive level
-		if (get_class($this) == 'Room') {
+		if (0 && get_class($this) == 'Room') {
 			if (@$query['recursive'] < 0) $query['recursive'] = 0;
 		}
 		return $query;

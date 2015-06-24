@@ -38,12 +38,14 @@
 						<td><?php echo h($booking['Booking']['institution']); ?></td>
 						<td><?php echo h($booking['Booking']['country']); ?></td>
 						<td>
-							<?php echo $this->Html->link($booking['Room']['name'], array('controller' => 'rooms', 'action' => 'view', $booking['Room']['id'])); ?>
+							<?php echo @$this->Html->link($booking['Room']['name'], array('controller' => 'rooms', 'action' => 'view', $booking['Room']['id'])); ?>
 						</td>
 						<!--td>
 							<?php echo $this->Html->link($booking['PriceType']['name'], array('controller' => 'price_types', 'action' => 'view', $booking['PriceType']['id'])); ?>
 						</td-->
-						<td class="c"><?php echo h($booking['Booking']['beds']); ?></td>
+						<td class="c">
+							<?php if (isset($booking['Room']['id'])) { echo h($booking['Booking']['beds']); } ?>
+						</td>
 						<td><?php echo $this->Time->format($booking['Booking']['start'], '%-d.%-m.&nbsp;%Y'); ?></td>
 						<td><?php echo $this->Time->format($booking['Booking']['end'], '%-d.%-m.&nbsp;%Y'); ?></td>
 						<td><?php echo h($booking['Booking']['email']); ?></td>

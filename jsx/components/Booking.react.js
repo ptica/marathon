@@ -2,6 +2,7 @@ var React = require('react');
 var RoomStore = require('../stores/RoomStore');
 var Room = require('./Room.react');
 var BookingActions = require('../actions/BookingActions');
+var RoomAPI = require('../utils/RoomAPI');
 
 /**
 * Decimal adjustment of a number.
@@ -132,6 +133,29 @@ var Booking = React.createClass({
 		}
 		return price;
 	},
+	_onSubmit: function (e) {
+		// do a ajax check if the room is still available
+		var room = RoomStore.getSelectedRoom();
+		var beds = RoomStore.getSelectedBeds();
+		var start = RoomStore.getStart();
+		var end = RoomStore.getEnd();
+
+		if (room.Room.id !== null) {
+			url = App.base + '/rooms/check/' + room.Room.id + '/' + beds + '/' + start.format('YYYY-MM-DD') + '/' + end.format('YYYY-MM-DD');
+			$.get(url, function(response) {
+				if (response == 'OK') {
+					// submit after all
+					$('form#BookingAdminAddForm').submit();
+				} else {
+					// get fresh rooms
+					RoomAPI.getRoomData();
+					bootbox.alert('Alas!<br>The room you selected was sold in the meantime!<br>Sorry about that.');
+				}
+			});
+			// prevent for now
+			e.preventDefault();
+		}
+	},
 	render: function() {
 		// Rooms
 		var suitable_rooms = RoomStore.get_suitable_rooms();
@@ -235,7 +259,7 @@ var Booking = React.createClass({
 
 				<div className="row">
 				<div className="col-md-9">
-				<form action="/" role="form" className="fill form-horizontal" id="BookingAdminAddForm" method="post" acceptCharset="utf-8">
+				<form action="/" onSubmit={this._onSubmit} role="form" className="fill form-horizontal" id="BookingAdminAddForm" method="post" acceptCharset="utf-8">
 					<div className="form-group">
 						<label htmlFor="QueryQuery" className="col-sm-2 control-label"></label>
 						<div className="col-sm-8 input-group">

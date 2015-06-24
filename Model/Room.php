@@ -11,7 +11,6 @@ class Room extends AppModel {
 	public $virtualFields = array(
 		'start' => "DATE_FORMAT(`Room`.`start`, '%e.%c.%Y')",
 		'end' => "DATE_FORMAT(`Room`.`end`, '%e.%c.%Y')",
-		'fullname' => "CONCAT(`Room`.`name`, ' (', `Location`.`name`, ', ', DATE_FORMAT(`Room`.`start`, '%e.%c.'), ' - ', DATE_FORMAT(`Room`.`end`, '%e.%c.'), ')')",
 	);
 
 	public $actsAs = array('Containable');

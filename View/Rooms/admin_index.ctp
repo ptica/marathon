@@ -26,6 +26,7 @@
 						<th><?php echo $this->Paginator->sort('start'); ?></th>
 						<th><?php echo $this->Paginator->sort('end'); ?></th>
 						<th><?php echo $this->Paginator->sort('amount'); ?></th>
+						<th><?php echo $this->Paginator->sort('amount_left', 'Beds left'); ?></th>
 						<th class="actions"></th>
 					</tr>
 				</thead>
@@ -40,6 +41,7 @@
 						<td><?php echo $this->Time->format($room['Room']['start'], '%-d.%-m.&nbsp;%Y'); ?></td>
 						<td><?php echo $this->Time->format($room['Room']['end'], '%-d.%-m.&nbsp;%Y'); ?></td>
 						<td><?php echo h($room['Room']['amount']); ?></td>
+						<td><?php echo h($room['Room']['amount_left']); ?></td>
 						<td class="actions">
 							<?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', array('action' => 'edit', $room['Room']['id']), array('escape' => false)); ?>
 							<?php echo $this->Form->postLink('<span class="glyphicon glyphicon-remove"></span>', array('action' => 'delete', $room['Room']['id']), array('escape' => false), __('Are you sure you want to delete # %s?', $room['Room']['id'])); ?>

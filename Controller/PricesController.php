@@ -5,8 +5,13 @@ class PricesController extends AppController {
 
 	public $components = array('Paginator', 'Session');
 
-
 	public function admin_index() {
+		$this->Price->Room->bindModel(array('belongsTo'=>array('Location')));
+		// TODO
+		// get Rooms joined with Location
+		// to virtualField works
+		//$this->Price->Room->virtualFields['fullname'] = "CONCAT(`Room`.`name`, ' (', `Location`.`name`, ', ', DATE_FORMAT(`Room`.`start`, '%e.%c.'), ' - ', DATE_FORMAT(`Room`.`end`, '%e.%c.'), ')')";
+		$this->Price->Room->virtualFields['fullname'] = 'Room.name';
 		$this->Price->recursive = 0;
 		$this->set('prices', $this->Paginator->paginate());
 	}

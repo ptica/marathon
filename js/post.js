@@ -85,7 +85,6 @@ App.fill = function () {
 };
 
 $('form.fill .submit input').on('click', function (event) {
-	console.log('here!');
 	if (event.shiftKey) {
 		App.fill();
 		event.preventDefault();

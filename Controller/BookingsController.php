@@ -15,11 +15,19 @@ class BookingsController extends AppController {
 
 	public function add() {
 		if ($this->request->is('post')) {
+			$room_id = $this->request->data['Booking']['room_id'];
+			$beds = $this->request->data['Booking']['beds'];
 			// create a security token
 			$this->request->data['Booking']['token'] = uniqid();
 			$this->Booking->create();
 			if ($this->Booking->save($this->request->data)) {
 				$this->email_add_notice();
+				// decrement amount_available
+				$this->Booking->Room->id = $room_id;
+				$this->Booking->Room->updateAll(
+					array('Room.amount_left' => 'Room.amount_left - ' . $beds),
+					array('Room.id' => $room_id)
+				);
 				$this->Session->setFlash(__('The booking has been saved.'), 'default', array('class' => 'alert alert-success'));
 				return $this->redirect('/thank-you');
 			} else {
@@ -65,7 +73,7 @@ class BookingsController extends AppController {
 
 	public function admin_index() {
 		$this->Booking->recursive = 0;
-		$this->Booking->Room->contain('Location');
+		//$this->Booking->Room->contain('Location');
 		$this->set('bookings', $this->Paginator->paginate());
 	}
 
@@ -121,8 +129,17 @@ class BookingsController extends AppController {
 		if (!$this->Booking->exists()) {
 			throw new NotFoundException(__('Invalid booking'));
 		}
+		$booking = $this->Booking->findById($id);
+		$room_id = $booking['Booking']['room_id'];
+		$beds    = $booking['Booking']['beds'];
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Booking->delete()) {
+			// credit room beds
+			$this->Booking->Room->id = $room_id;
+			$this->Booking->Room->updateAll(
+				array('Room.amount_left' => 'Room.amount_left + ' . $beds),
+				array('Room.id' => $room_id)
+			);
 			$this->Session->setFlash(__('The booking has been deleted.'), 'default', array('class' => 'alert alert-success'));
 		} else {
 			$this->Session->setFlash(__('The booking could not be deleted. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
