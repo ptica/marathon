@@ -151,9 +151,9 @@ var Booking = React.createClass({
 				<div className="row">
 					<div className="col-md-12">
 						<div className="page-header">
-							<ul className="nav nav-pills nav-stacked pull-right">
+							{/*<ul className="nav nav-pills nav-stacked pull-right">
 								<li><span className="glyphicon glyphicon-tag"></span>&nbsp;&nbsp;PRICE</li>
-							</ul>
+							</ul>*/}
 							<h1>Registration</h1>
 						</div>
 					</div>
@@ -163,16 +163,23 @@ var Booking = React.createClass({
 				<div className="col-md-9">
 				<form action="/" role="form" className="fill form-horizontal" id="BookingAdminAddForm" method="post" acceptCharset="utf-8">
 					<div className="form-group">
-						<label htmlFor="BookingFirstname" className="col-sm-2 control-label">First name</label>
+						<label htmlFor="BookingName" className="col-sm-2 control-label">Your name</label>
 						<div className="col-sm-8 input-group">
-							<input ref="firstname" name="data[Booking][firstname]" className="form-control" placeholder="First name" maxLength="255" type="text" id="BookingFirstname" required="required"/>
+							<input ref="firstname" name="data[Booking][name]" className="form-control" placeholder="First name" maxLength="255" type="text" id="BookingName" required="required"/>
 						</div>
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="BookingLastname" className="col-sm-2 control-label">Last name</label>
+						<label htmlFor="BookingInstitution" className="col-sm-2 control-label">Institution</label>
 						<div className="col-sm-8 input-group">
-							<input ref="lastname" name="data[Booking][lastname]" className="form-control" placeholder="Last name" maxLength="255" type="text" id="BookingLastname" required="required"/>
+							<input ref="lastname" name="data[Booking][institution]" className="form-control" placeholder="(to appear on the badge)" maxLength="255" type="text" id="BookingInstitution" required="required"/>
+						</div>
+					</div>
+
+					<div className="form-group">
+						<label htmlFor="BookingCountry" className="col-sm-2 control-label">Country</label>
+						<div className="col-sm-8 input-group">
+							<input ref="lastname" name="data[Booking][country]" className="form-control" placeholder="Country" maxLength="255" type="text" id="BookingCountry" required="required"/>
 						</div>
 					</div>
 
@@ -251,7 +258,7 @@ var Booking = React.createClass({
 
 					<div className="form-group">
 						<label htmlFor="UpsellUpsell" className="col-sm-2 control-label">Total price</label>
-						<div className="col-sm-8 input-group totalPrice">{total_price} CZK</div>
+						<div className="col-sm-8 input-group totalPrice"><span className="glyphicon glyphicon-tag"></span>&nbsp;&nbsp;{total_price} CZK</div>
 						<input type="hidden" name="data[Booking][web_price]" value={total_price} id="BookingWebPrice"/>
 					</div>
 

@@ -19,8 +19,9 @@
 			<table cellpadding="0" cellspacing="0" class="table table-striped">
 				<thead>
 					<tr>
-						<th><?php echo $this->Paginator->sort('firstname'); ?></th>
-						<th><?php echo $this->Paginator->sort('lastname'); ?></th>
+						<th><?php echo $this->Paginator->sort('name'); ?></th>
+						<th><?php echo $this->Paginator->sort('institution'); ?></th>
+						<th><?php echo $this->Paginator->sort('country'); ?></th>
 						<th><?php echo $this->Paginator->sort('room_id'); ?></th>
 						<th><?php echo $this->Paginator->sort('beds'); ?></th>
 						<th><?php echo $this->Paginator->sort('start'); ?></th>
@@ -33,8 +34,9 @@
 				<tbody>
 				<?php foreach ($bookings as $booking) { ?>
 					<tr>
-						<td><?php echo h($booking['Booking']['firstname']); ?></td>
-						<td><?php echo h($booking['Booking']['lastname']); ?></td>
+						<td><?php echo h($booking['Booking']['name']); ?></td>
+						<td><?php echo h($booking['Booking']['institution']); ?></td>
+						<td><?php echo h($booking['Booking']['country']); ?></td>
 						<td>
 							<?php echo $this->Html->link($booking['Room']['name'], array('controller' => 'rooms', 'action' => 'view', $booking['Room']['id'])); ?>
 						</td>

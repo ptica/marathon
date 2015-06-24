@@ -6,6 +6,7 @@
 		'Rooms' => '/admin/rooms',
 		'Prices' => '/admin/prices',
 		'Bookings' => '/admin/bookings',
+		'Survey' => '/admin/queries',
 	);
 ?>
 <div class="actions">
