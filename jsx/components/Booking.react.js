@@ -165,7 +165,7 @@ var Booking = React.createClass({
 					<div className="form-group">
 						<label htmlFor="BookingName" className="col-sm-2 control-label">Your name</label>
 						<div className="col-sm-8 input-group">
-							<input ref="firstname" name="data[Booking][name]" className="form-control" placeholder="First name" maxLength="255" type="text" id="BookingName" required="required"/>
+							<input ref="firstname" name="data[Booking][name]" className="form-control" placeholder="Your name" maxLength="255" type="text" id="BookingName" required="required"/>
 						</div>
 					</div>
 
@@ -180,6 +180,16 @@ var Booking = React.createClass({
 						<label htmlFor="BookingCountry" className="col-sm-2 control-label">Country</label>
 						<div className="col-sm-8 input-group">
 							<input ref="lastname" name="data[Booking][country]" className="form-control" placeholder="Country" maxLength="255" type="text" id="BookingCountry" required="required"/>
+						</div>
+					</div>
+
+					<div className="form-group">
+						<label htmlFor="BookingAddress" className="col-sm-2 control-label">Address</label>
+						<div className="col-sm-8 input-group">
+							<textarea name="data[Booking][address]" className="form-control" data-provide="wysiwyg" placeholder="Organization and address
+for your printed receipt:
+(only if you need a receipt)" cols="30" rows="6" id="BookingAddress">
+							</textarea>
 						</div>
 					</div>
 
