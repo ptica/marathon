@@ -21,6 +21,8 @@
 				<thead>
 					<tr>
 						<th><?php echo $this->Paginator->sort('name'); ?></th>
+						<th><?php echo $this->Paginator->sort('price'); ?></th>
+						<th><?php echo $this->Paginator->sort('original_price'); ?></th>
 						<th class="actions"></th>
 					</tr>
 				</thead>
@@ -28,6 +30,8 @@
 				<?php foreach ($meals as $meal) { ?>
 					<tr>
 						<td><?php echo h($meal['Meal']['name']); ?></td>
+						<td><?php echo h($meal['Meal']['price']); ?></td>
+						<td><?php echo h($meal['Meal']['original_price']); ?></td>
 						<td class="actions">
 							<?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', array('action' => 'edit', $meal['Meal']['id']), array('escape' => false)); ?>
 							<?php echo $this->Form->postLink('<span class="glyphicon glyphicon-remove"></span>', array('action' => 'delete', $meal['Meal']['id']), array('escape' => false), __('Are you sure you want to delete # %s?', $meal['Meal']['id'])); ?>

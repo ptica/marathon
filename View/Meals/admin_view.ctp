@@ -41,6 +41,18 @@
 						</td>
 					</tr>
 					<tr>
+						<th><?php echo __('Price'); ?></th>
+						<td>
+							<?php echo h($meal['Meal']['price']); ?>
+						</td>
+					</tr>
+					<tr>
+						<th><?php echo __('Original Price'); ?></th>
+						<td>
+							<?php echo h($meal['Meal']['original_price']); ?>
+						</td>
+					</tr>
+					<tr>
 						<th><?php echo __('Ord'); ?></th>
 						<td>
 							<?php echo h($meal['Meal']['ord']); ?>

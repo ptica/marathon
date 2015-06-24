@@ -28,6 +28,12 @@
 					<?php echo $this->Form->input('name', array('class'=>'form-control', 'placeholder'=>__('Name')));?>
 				</div>
 				<div class="form-group">
+					<?php echo $this->Form->input('price', array('class'=>'form-control', 'placeholder'=>__('Price')));?>
+				</div>
+				<div class="form-group">
+					<?php echo $this->Form->input('original_price', array('class'=>'form-control', 'placeholder'=>__('Original Price')));?>
+				</div>
+				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-8">
 						<?php echo $this->Form->submit(__('Submit'), array('class'=>'btn btn-primary')); ?>
 					</div>

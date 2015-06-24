@@ -93,6 +93,19 @@ class Booking extends AppModel {
 			'limit' => '',
 			'offset' => '',
 			'finderQuery' => '',
+		),
+		'Meal' => array(
+			'className' => 'Meal',
+			'joinTable' => 'bookings_meals',
+			'foreignKey' => 'booking_id',
+			'associationForeignKey' => 'meal_id',
+			'unique' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
 		)
 	);
 
