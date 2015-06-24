@@ -57,7 +57,7 @@ class BookingsController extends AppController {
 			$sanitized_data['Booking']['id'] = $id;
 			if ($this->Booking->save($sanitized_data)) {
 				$this->Session->setFlash(__('The registration has been saved.'), 'default', array('class' => 'alert alert-success'));
-				return $this->redirect($this->request->here);
+				return $this->redirect('/edit/'.$token);
 			} else {
 				$this->Session->setFlash(__('The registration could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
 			}
