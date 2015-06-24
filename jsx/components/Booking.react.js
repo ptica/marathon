@@ -101,6 +101,15 @@ var Booking = React.createClass({
 		var end = this.refs.end.getDOMNode().value;
 		BookingActions.setDates(start, end);
 	},
+	get_selected_room_price: function () {
+		var price = 0;
+		var selected_room = this.state.selected_room;
+		var suitable_rooms = RoomStore.get_suitable_rooms();
+		if (selected_room.Room.id in suitable_rooms) {
+			price = selected_room.Price * this.state.nights_count * this.state.selected_beds;
+		}
+		return price;
+	},
 	get_selected_upsells_price: function () {
 		var price = 0;
 		var all_upsells = RoomStore.getUpsells(this.state.selected_room.Location.id);
@@ -125,13 +134,13 @@ var Booking = React.createClass({
 	},
 	render: function() {
 		// Rooms
-		var all_rooms = this.state.rooms;
+		var suitable_rooms = RoomStore.get_suitable_rooms();
+		var rooms_by_id    = RoomStore.get_rooms_by_id();
 		var rooms = [];
-		for (var key in all_rooms) {
-			var selected = (this.state.selected_room.Room.id == all_rooms[key].Room.id);
-			if (this.state.selected_beds <= all_rooms[key].Room.beds) {
-				rooms.push(<Room key={key} selected={selected} room={all_rooms[key]} onClick={this.selectRoom}/>);
-			}
+		for (var id in suitable_rooms) {
+			var room = rooms_by_id[id];
+			var selected = (this.state.selected_room.Room.id == room.Room.id);
+			rooms.push(<Room key={id} selected={selected} room={room} onClick={this.selectRoom}/>);
 		}
 		if (rooms.length == 0) {
 			rooms = <div className="none">Alas! No suitable room available.</div>;
@@ -206,10 +215,10 @@ var Booking = React.createClass({
 
 		// Others
 		var selected_room = this.state.selected_room;
-		var room_price  = selected_room.Price * this.state.nights_count * this.state.selected_beds;
-		var upsell_price = this.get_selected_upsells_price();
-		var meal_price = this.get_selected_meals_price();
-		var total_price = Math.round10(room_price + upsell_price + meal_price, -2).toFixed(2);
+		var room_price    = this.get_selected_room_price();
+		var upsell_price  = this.get_selected_upsells_price();
+		var meal_price    = this.get_selected_meals_price();
+		var total_price   = Math.round10(room_price + upsell_price + meal_price, -2).toFixed(2);
 
 		return (
 			<div>

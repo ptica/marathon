@@ -54,7 +54,12 @@ function receive_queries(queries) {
 }
 
 function set_selected_room(room_id) {
-	_selected_room_id = room_id;
+	// toggle
+	if (_selected_room_id == room_id) {
+		_selected_room_id = null;
+	} else {
+		_selected_room_id = room_id;
+	}
 }
 
 function set_selected_beds(count) {
@@ -100,6 +105,10 @@ var RoomStore = assign({}, EventEmitter.prototype, {
 		return _rooms;
 	},
 
+	get_rooms_by_id: function() {
+		return _rooms_by_id;
+	},
+
 	getSelectedRoom: function() {
 		return _rooms_by_id[_selected_room_id];
 	},
@@ -126,6 +135,19 @@ var RoomStore = assign({}, EventEmitter.prototype, {
 		return _queries;
 	},
 
+	get_suitable_rooms: function () {
+		var all_rooms = this.getRooms();
+		var selected_beds = this.getSelectedBeds();
+		var rooms = {};
+		for (var i in all_rooms) {
+			var room = all_rooms[i];
+			// check bed count
+			if (selected_beds <= room.Room.beds) {
+				rooms[room.Room.id] = true;
+			}
+		}
+		return rooms;
+	},
 	get_selected_upsells: function() {
 		return _selected_upsells;
 	},
