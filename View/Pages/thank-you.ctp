@@ -1,7 +1,7 @@
 <h1>Thank you for your registration!</h1>
 
 <p>
-    An email receipt should arrive soon in your mailbox.
+    A confirmation email should arrive soon in your mailbox.
 </p>
 
 <p>
