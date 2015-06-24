@@ -20,11 +20,19 @@
 		<div class="col-md-9">
 			<?php echo $this->Form->create('Booking', array('role'=>'form', 'class'=>'form-horizontal')); ?>
 				<div class="form-group">
-					<?php echo $this->Form->input('firstname', array('class'=>'form-control', 'placeholder'=>__('Firstname')));?>
+					<?php echo $this->Form->input('name', array('class'=>'form-control', 'placeholder'=>__('Name')));?>
 				</div>
 
 				<div class="form-group">
-					<?php echo $this->Form->input('lastname', array('class'=>'form-control', 'placeholder'=>__('Lastname')));?>
+					<?php echo $this->Form->input('institution', array('class'=>'form-control', 'placeholder'=>__('Institution')));?>
+				</div>
+
+				<div class="form-group">
+					<?php echo $this->Form->input('country', array('class'=>'form-control', 'placeholder'=>__('Country')));?>
+				</div>
+
+				<div class="form-group">
+					<?php echo $this->Form->input('address', array('class'=>'form-control', 'placeholder'=>__('Address')));?>
 				</div>
 
 				<div class="form-group">
