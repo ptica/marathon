@@ -264,7 +264,7 @@ var Booking = React.createClass({
 
 				<div className="row">
 				<div className="col-md-9">
-				<form action="/" onSubmit={this._onSubmit} role="form" className="fill form-horizontal" id="BookingAdminAddForm" method="post" acceptCharset="utf-8">
+				<form onSubmit={this._onSubmit} role="form" className="fill form-horizontal" id="BookingAdminAddForm" method="post" acceptCharset="utf-8">
 					<div className="form-group">
 						<label htmlFor="QueryQuery" className="col-sm-2 control-label"></label>
 						<div className="col-sm-8 input-group">
