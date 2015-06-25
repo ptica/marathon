@@ -268,7 +268,7 @@ var Booking = React.createClass({
 					<div className="form-group">
 						<label htmlFor="QueryQuery" className="col-sm-2 control-label"></label>
 						<div className="col-sm-8 input-group">
-							<p className="form-control-static">To help us allocate the rooms accordingly, please indicate which sections of MT Marathon do you plan to attend:</p>
+							<p className="form-control-static">To help us allocate rooms accordingly, please indicate which sections of MT Marathon you plan to attend:</p>
 						</div>
 					</div>
 					<div className="form-group">
@@ -355,6 +355,17 @@ for your printed receipt:
 					</div>*/}
 
 					<div className="form-group">
+						<label htmlFor="QueryQuery" className="col-sm-2 control-label"></label>
+						<div className="col-sm-8 input-group">
+							<p className="form-control-static">For students (each occupant needs to show a valid ISIC!), we offer the following accommodation options.</p>
+							<p className="form-control-static">To book a room with a fellow of yours, one of you should book two (or three) beds in a larger room.
+								If you  book just one bed in a larger room, you may want to tell us your preferred party, otherwise,
+								we may need to allocate another random participant to the room.
+							</p>
+						</div>
+					</div>
+
+					<div className="form-group">
 						<label htmlFor="BookingBeds" className="col-sm-2 control-label">Beds</label>
 						<div className="col-sm-8 input-group">
 							<input ref="beds" value={this.state.selected_beds} onChange={this.selectBeds} name="data[Booking][beds]" className="form-control" placeholder="Beds" type="tel" id="BookingBeds" required="required"/>
@@ -387,7 +398,7 @@ for your printed receipt:
 						<label htmlFor="QueryQuery" className="col-sm-2 control-label">Lunches</label>
 						<div className="col-sm-8 input-group">
 							<p className="form-control-static">You (the registrant) may want lunches at the conference venue on the following MT Marathon days (Sept 7-Sept 12):</p>
-							<p className="form-control-static">Price is per lunch (includes soup, main dish, dessert and drink).</p>
+							<p className="form-control-static">The price is per lunch (includes soup, main dish, dessert and drink).</p>
 						</div>
 					</div>
 
