@@ -41,7 +41,7 @@
 						<td>
 							<?php
 								$title = $booking['Room']['name'] . '@' . @$locations[$booking['Room']['location_id']];
-								$url = array('controller' => 'rooms', 'action' => 'view', $booking['Room']['id']);
+								$url = array('controller' => 'bookings', 'action' => 'edit', $booking['Booking']['id']);
 								echo @$this->Html->link($title, $url);
 							?>
 						</td>
