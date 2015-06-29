@@ -28,6 +28,9 @@ class RoomsController extends AppController {
 			//$conditions['end <']    = date('Y-m-t', strtotime("+5 month"));
 		}
 
+		// respect Location.deadline
+		$conditions['Location.deadline >'] = date('Y-m-d H:i:s');
+
 		$conditions['amount_left >'] = 0;
 
 		$this->Room->contain(array(

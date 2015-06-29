@@ -30,6 +30,7 @@
 					<?php echo $this->Form->input('deadline', array(
 						'type' => 'text',
 						'data-provide' => 'datepicker',
+						'data-date-format' => 'D.M.YYYY HH:mm',
 						'data-date-language' => Configure::read('Config.locale'),
 						'class' => 'form-control',
 						'label' => __('Deadline'),

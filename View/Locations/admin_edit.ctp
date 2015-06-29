@@ -35,6 +35,7 @@
 						'type' => 'text',
 						'data-provide' => 'datepicker',
 						'data-date-language' => Configure::read('Config.locale'),
+						'data-date-format' => 'D.M.YYYY HH:mm',
 						'class' => 'form-control',
 						'label' => __('Deadline'),
 						'placeholder' => __('Deadline'),
