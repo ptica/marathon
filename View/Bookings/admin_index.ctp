@@ -1,4 +1,3 @@
-<?php debug($locations); ?>
 <div class="bookings index">
 	<div class="row">
 		<div class="col-md-12">
@@ -40,7 +39,8 @@
 						<td><?php echo h($booking['Booking']['country']); ?></td>
 						<td>
 							<?php
-								$title = $booking['Room']['name'] . '@' . @$locations[$booking['Room']['location_id']];
+								$title = '-';
+								if (isset($booking['Room']['name'])) $title = $booking['Room']['name'] . '@' . @$locations[$booking['Room']['location_id']];
 								$url = array('controller' => 'bookings', 'action' => 'edit', $booking['Booking']['id']);
 								echo @$this->Html->link($title, $url);
 							?>
