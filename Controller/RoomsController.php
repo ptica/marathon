@@ -80,7 +80,8 @@ class RoomsController extends AppController {
 			'Room.beds >=' => $beds,
 			'Room.start <=' => $start,
 			'Room.end >=' => $end,
-			'Room.amount_left >' => 0
+			'Room.amount_left >' => 0,
+			'Location.deadline >' => date('Y-m-d H:i:s'),
 		);
 		// do not localize dates now so we can do comparison !!!!
 		// TODO rethink the dates virtualFields localization after all
