@@ -40,7 +40,7 @@ class AppController extends Controller {
 			'admin' => false
 		);
 		$this->Auth->loginRedirect = array(
-			'controller' => 'rooms',
+			'controller' => 'bookings',
 			'action' => 'index',
 			'admin' => true
 		);
