@@ -11,17 +11,14 @@
 	</div>
 
 	<div class="row">
-		<div class="col-md-3">
-			<?php echo $this->element('admin_navigation'); ?>
-					</div><!-- end col md 3 -->
-
-		<div class="col-md-9">
+		<div class="col-md-12">
 			<table cellpadding="0" cellspacing="0" class="table table-striped">
 				<thead>
 					<tr>
 						<th><?php echo $this->Paginator->sort('name'); ?></th>
 						<th><?php echo $this->Paginator->sort('institution'); ?></th>
 						<th><?php echo $this->Paginator->sort('country'); ?></th>
+						<th><?php echo $this->Paginator->sort('address'); ?></th>
 						<th><?php echo $this->Paginator->sort('room_id'); ?></th>
 						<th><?php echo $this->Paginator->sort('beds'); ?></th>
 						<th><?php echo $this->Paginator->sort('start'); ?></th>
@@ -37,6 +34,7 @@
 						<td><?php echo h($booking['Booking']['name']); ?></td>
 						<td><?php echo h($booking['Booking']['institution']); ?></td>
 						<td><?php echo h($booking['Booking']['country']); ?></td>
+						<td><?php echo h($booking['Booking']['address']); ?></td>
 						<td>
 							<?php
 								$title = '-';
@@ -81,8 +79,13 @@
 			</ul>
 			<?php } ?>
 
-		</div> <!-- end col md 9 -->
+		</div> <!-- end col md 12 -->
 	</div><!-- end row -->
 
+	<div class="row">
+		<div class="col-md-3">
+			<?php echo $this->element('admin_navigation'); ?>
+		</div><!-- end col md 3 -->
+	</div>
 
 </div>
