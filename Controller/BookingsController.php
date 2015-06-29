@@ -75,8 +75,9 @@ class BookingsController extends AppController {
 
 	public function admin_index() {
 		$this->Booking->recursive = 0;
-		//$this->Booking->Room->contain('Location');
 		$this->set('bookings', $this->Paginator->paginate());
+		//$this->set('bookings', $this->Booking->find('all'));
+		$this->set('locations', $this->Booking->Room->Location->find('list'));
 	}
 
 	public function admin_view($id = null) {
