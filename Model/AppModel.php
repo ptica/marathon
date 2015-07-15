@@ -42,7 +42,7 @@ class AppModel extends Model {
 
 	}
 	public function convert_date_fields() {
-		foreach ($this->dateFields as $date_field) if (!empty($this->data[$this->alias][$date_field])) {
+		if ($this->dateFields) foreach ($this->dateFields as $date_field) if (!empty($this->data[$this->alias][$date_field])) {
 			$this->data[$this->alias][$date_field] = $this->date_to_sql($this->data[$this->alias][$date_field]);
 		}
 	}
