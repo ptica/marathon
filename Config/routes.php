@@ -24,6 +24,7 @@
 	Router::connect('/logout', array('controller' => 'users', 'action' => 'logout'));
 
 	Router::connect('/pay/:id/:token', array('plugin'=> 'payment', 'controller' => 'payment', 'action' => 'pay', 'id' => '[0-9]+', 'token' => '.+'), array('pass' => array('id', 'token')));
+	Router::connect('/pay/result', array('plugin'=> 'payment', 'controller' => 'payment', 'action' => 'result'));
 
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
