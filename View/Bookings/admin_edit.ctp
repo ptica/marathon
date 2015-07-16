@@ -37,7 +37,7 @@
 					<?php echo $this->Form->input('id', array('class'=>'form-control', 'placeholder'=>__('Id')));?>
 				</div>
 				<div class="form-group">
-					<?php echo $this->Form->input('room_id', array('class'=>'form-control', 'placeholder'=>__('Room Id')));?>
+					<?php echo $this->Form->input('room_id', array('empty'=>true, 'class'=>'form-control', 'placeholder'=>__('Room Id')));?>
 				</div>
 				<div class="form-group">
 					<?php echo $this->Form->input('price_type_id', array('class'=>'form-control', 'placeholder'=>__('Price Type Id')));?>
