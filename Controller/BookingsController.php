@@ -7,6 +7,10 @@ class BookingsController extends AppController {
 
 	public $components = array('Paginator', 'Session');
 
+	public $paginate = array(
+		'limit' => 75,
+	);
+
 	// declare public actions
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -75,6 +79,7 @@ class BookingsController extends AppController {
 
 	public function admin_index() {
 		$this->Booking->recursive = 0;
+		$this->Paginator->settings = $this->paginate;
 		$this->set('bookings', $this->Paginator->paginate());
 		//$this->set('bookings', $this->Booking->find('all'));
 		$this->set('locations', $this->Booking->Room->Location->find('list'));
