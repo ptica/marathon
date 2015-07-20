@@ -6,16 +6,6 @@ class Booking extends AppModel {
 	public $dateFields = array('start', 'end');
 
 	public $validate = array(
-		'room_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
 		'price_type_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
