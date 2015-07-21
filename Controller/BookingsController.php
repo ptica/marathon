@@ -70,6 +70,9 @@ class BookingsController extends AppController {
 		} else {
 			$options = array('conditions' => array('Booking.' . $this->Booking->primaryKey => $id));
 			$this->request->data = $this->Booking->find('first', $options);
+			if (!$this->request->data['Booking']['room_id']) {
+				$this->request->data['Booking']['beds'] = 0;
+			}
 		}
 		$rooms = $this->Booking->Room->find('list');
 		$priceTypes = $this->Booking->PriceType->find('list');
