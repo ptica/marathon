@@ -17,7 +17,8 @@
 	<div class="row">
 		<div class="col-md-3">
 			<?php echo $this->element('admin_navigation'); ?>
-					</div><!-- end col md 3 -->
+		</div><!-- end col md 3 -->
+		
 		<div class="col-md-9">
 			<?php echo $this->Form->create('Booking', array('role'=>'form', 'class'=>'form-horizontal')); ?>
 				<div class="form-group">
