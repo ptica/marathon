@@ -22,10 +22,11 @@ class BookingsController extends AppController {
 			$room_id = @$this->request->data['Booking']['room_id'];
 			$beds = @$this->request->data['Booking']['beds'];
 			// create a security token
-			$this->request->data['Booking']['token'] = uniqid();
+			$token = uniqid();
+			$this->request->data['Booking']['token'] = $token;
 			$this->Booking->create();
 			if ($this->Booking->save($this->request->data)) {
-				$this->email_add_notice();
+				$booking_id = $this->Booking->id;
 				// decrement amount_available
 				if ($room_id) {
 					$this->Booking->Room->id = $room_id;
@@ -34,10 +35,13 @@ class BookingsController extends AppController {
 						array('Room.id' => $room_id)
 					);
 				}
-				$this->Session->setFlash(__('The booking has been saved.'), 'default', array('class' => 'alert alert-success'));
+				$this->Session->setFlash(__('The registration has been saved.'), 'default', array('class' => 'alert alert-success'));
+				
+				//return $this->redirect("/pay/$booking_id/$token");
+				$this->email_add_notice();
 				return $this->redirect('/thank-you');
 			} else {
-				$this->Session->setFlash(__('The booking could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
+				$this->Session->setFlash(__('The registration could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
 			}
 		}
 	}
@@ -61,6 +65,8 @@ class BookingsController extends AppController {
 			$sanitized_data = array();
 			$sanitized_data['Booking'] = array_intersect_key($this->request->data['Booking'], $allowed_fields);
 			$sanitized_data['Booking']['id'] = $id;
+			$sanitized_data['Query'] = $this->request->data['Query'];
+			
 			if ($this->Booking->save($sanitized_data)) {
 				$this->Session->setFlash(__('The registration has been saved.'), 'default', array('class' => 'alert alert-success'));
 				return $this->redirect('/edit/'.$token);
@@ -74,10 +80,15 @@ class BookingsController extends AppController {
 				$this->request->data['Booking']['beds'] = 0;
 			}
 		}
-		$rooms = $this->Booking->Room->find('list');
-		$priceTypes = $this->Booking->PriceType->find('list');
-		$upsells = $this->Booking->Upsell->find('list');
-		$this->set(compact('rooms', 'priceTypes', 'upsells'));
+		$this->request->data = $booking;
+		$priceTypes          = $this->Booking->PriceType->find('list');
+		$upsells             = $this->Booking->Upsell->find('list');
+		$meals               = $this->Booking->Meal->find('list');
+		$queries             = $this->Booking->Query->find('list');
+		$rooms               = $this->Booking->Room->find('list');
+		$locations           = $this->Booking->Room->Location->find('list');
+		$location_desc       = $this->Booking->Room->Location->find('list', array('fields'=>array('id', 'desc')));
+		$this->set(compact('rooms', 'priceTypes', 'upsells', 'meals', 'queries', 'locations', 'location_desc'));
 	}
 
 	public function admin_index() {
@@ -171,6 +182,56 @@ class BookingsController extends AppController {
 		$content[] = Router::url('/edit/' . $this->Booking->field('token'), true);
 		$owner_mail = $this->Booking->field('email');
 		$to = array($owner_mail);
+
+		$Email = new CakeEmail('default');
+		$Email->to($to);
+		$Email->send($content);
+	}
+	
+	public function mail($booking_id) {
+		$conditions = array(
+			'Booking.web_price >' => 0
+		);
+		$bookings = $this->Booking->find('all', compact('conditions'));
+		
+		foreach ($bookings as $booking) {
+			echo("sending email for " . $booking['Booking']['email']. "<br>");
+			$this->Booking->create();
+			$this->Booking->save(array(
+				'id' =>  $booking['Booking']['id'],
+				'paylink_sent' => date('Y-m-d H:i:s')
+			));
+			//$this->send_link_to_payment($booking['Booking']['id']);
+		}
+		exit();
+	}
+	
+	/**
+	 * payment email
+	 */
+	private function send_link_to_payment($booking_id) {
+		$booking_id = (int) $booking_id;
+		$cnd = array( 'Booking.id' => $booking_id );
+
+		$booking = $this->Booking->find('first', array('conditions'=>$cnd));
+		if (!$booking) {
+			echo 'Payment not found.';
+			exit();
+		}
+
+		$this->set_request_scheme();
+		$token = $booking['Booking']['token'];
+		$subject = 'MTM 2015 Registration Payment';
+		$to = $booking['Booking']['email'];
+		$to = array($to);
+		
+		$content = array();
+		$content[] = 'Hello!';
+		$content[] = '';
+		$content[] = 'Please review your registration details and proceed to payment at ';
+		$content[] = Router::url("/pay/$booking_id/$token", $absolute=true);
+		$content[] = '';
+		$content[] = 'Take care, the MTM 2015 team.';
 
 		$Email = new CakeEmail('default');
 		$Email->to($to);

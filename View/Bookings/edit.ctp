@@ -20,7 +20,7 @@
 		<div class="col-md-9">
 			<?php echo $this->Form->create('Booking', array('role'=>'form', 'class'=>'form-horizontal')); ?>
 				<div class="form-group">
-					<?php echo $this->Form->input('name', array('class'=>'form-control', 'placeholder'=>__('Name')));?>
+					<?php echo $this->Form->input('name', array('label'=>'Your Name', 'class'=>'form-control', 'placeholder'=>__('Name')));?>
 				</div>
 
 				<div class="form-group">
@@ -38,16 +38,42 @@
 				<div class="form-group">
 					<?php echo $this->Form->input('id', array('class'=>'form-control', 'placeholder'=>__('Id')));?>
 				</div>
-				<div class="form-group">
-					<?php echo $this->Form->input('beds', array('disabled'=>'disabled', 'class'=>'form-control', 'placeholder'=>__('Beds')));?>
-				</div>
+				
+				<?php if ($this->request->data['Booking']['room_id']) { ?>
+					<?php
+						$location_id   = $this->request->data['Room']['location_id'];
+						$room_name     = $this->request->data['Room']['name'];
+						$location_name = $locations[$location_id];
+					?>
+					<div class="form-group">
+						<label for="BookingBeds" class="col-sm-2 control-label">Beds</label>
+						<p class="form-control-static">
+							<?php echo $this->request->data['Booking']['beds']; ?>
+						</p>
+					</div>
+					<div class="form-group">
+						<label for="BookingLocation" class="col-sm-2 control-label">Location</label>
+						<p class="form-control-static">
+							<?php echo "$room_name @ $location_name"; ?>
+						</p>
+					</div>
+					<div class="form-group" style="margin-top:-15px; color: gray;">
+						<label for="QueryQuery" class="col-sm-2 control-label"></label>
+						<div class="col-sm-8 input-group">
+							<p class="form-control-static">
+								<?php echo $location_desc[$location_id]; ?>
+							</p>
+						</div>
+					</div>
+				<?php } ?>
+				
 				<div class="form-group">
 					<?php echo $this->Form->input('start', array(
 						'type' => 'text',
 						'data-provide' => 'datepicker',
 						'data-date-language' => Configure::read('Config.locale'),
 						'class' => 'form-control',
-						'label' => __('Start'),
+						'label' => __('Arrival'),
 						'placeholder' => __('Start'),
 						'inputGroup' => array('append'=>'glyphicon-th'),
 						//BEWARE: datepicker needs JS initialization
@@ -61,7 +87,7 @@
 						'data-provide' => 'datepicker',
 						'data-date-language' => Configure::read('Config.locale'),
 						'class' => 'form-control',
-						'label' => __('End'),
+						'label' => __('Departure'),
 						'placeholder' => __('End'),
 						'inputGroup' => array('append'=>'glyphicon-th'),
 						//BEWARE: datepicker needs JS initialization
@@ -70,16 +96,26 @@
 					));?>
 				</div>
 				<div class="form-group">
-					<?php echo $this->Form->input('email', array('class'=>'form-control', 'placeholder'=>__('Email')));?>
+					<?php echo $this->Form->input('email', array('label'=>'Your email', 'class'=>'form-control', 'placeholder'=>__('Email')));?>
 				</div>
 				<div class="form-group">
-					<?php echo $this->Form->input('fellow_email', array('class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
+					<?php echo $this->Form->input('fellow_email', array('label'=>'Room Fellows', 'class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
+				</div>
+				<?php if (!empty($booking['Booking']['Upsell'])) { ?>
+					<div class="form-group">
+						<?php echo $this->Form->input('Upsell', array('multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
+					</div>
+				<?php } ?>
+				<div class="form-group">
+					<?php echo $this->Form->input('Meal', array('label'=>'Lunches', 'disabled'=>'disabled', 'multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Meals')));?>
 				</div>
 				<div class="form-group">
-					<?php echo $this->Form->input('Upsell', array('disabled'=>'disabled', 'label'=>'Addons', 'class'=>'form-control', 'placeholder'=>__('Upsell')));?>
+					<?php echo $this->Form->input('Query', array('label'=>'MTM Content', 'multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Queries')));?>
 				</div>
-				<div class="form-group">
-					<?php echo $this->Form->input('web_price', array('type'=>'text', 'value' => $this->data['Booking']['web_price'] . ' CZK', 'disabled'=>'disabled', 'label'=>'Price', 'class'=>'form-control', 'placeholder'=>__('Price')));?>
+				
+				<div class="form-group totalPriceDiv">
+					<label for="UpsellUpsell" class="col-sm-2 control-label">Total price</label>
+					<div class="col-sm-7 input-group totalPrice"><span class="glyphicon glyphicon-tag"></span>&nbsp;&nbsp;<?php echo $this->request->data['Booking']['web_price']; ?> CZK</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-8">
