@@ -40,4 +40,18 @@ class Upsell extends AppModel {
 			'order' => ''
 		)
 	);
+	
+	private $upsells = null;
+	public function get_upsells_by_location() {
+		if (!$this->upsells) {
+			$this->Location->bindModel(
+				array('hasMany' => array(
+					'Upsell' => array('order'=>'ord asc')
+				))
+			);
+			$this->upsells = $this->Location->find('all');
+			$this->upsells = Hash::combine($this->upsells, '{n}.Location.id', '{n}.Upsell');
+		}
+		return $this->upsells;
+	}
 }

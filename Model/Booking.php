@@ -108,5 +108,38 @@ class Booking extends AppModel {
 		}
 		return $result;
 	}
+	
+	public function get_price($booking) {
+		$rooms = $this->Room->get_rooms_by_id();
+		//$upsells = $this->Upsell->get_upsells_by_location();
+		//$meals = $this->Meals->get_meals_by_id();
+		
+		// price_room
+		$start  = explode(' ', $booking['Booking']['start']);
+		$end    = explode(' ', $booking['Booking']['end']);
+		$start  = strtotime($start[0]);
+		$end    = strtotime($end[0]);
+		$nights = $end - $start;
+		$nights = floor($nights/(60*60*24));
+		$room_id = $booking['Booking']['room_id'];
+		
+		$price_room = $booking['Booking']['beds'] * $nights * @$rooms[$room_id]['Price'];
+		
+		// price_meals
+		$price_meals = 0;
+		if (!empty($booking['Meals'])) foreach ($booking['Meals'] as $meal) {
+			$price_meals += $meal['price'];
+		}
+		
+		// price addons
+		$price_addons = 0;
+		if (!empty($booking['Upsell'])) foreach ($booking['Upsell'] as $upsell) {
+			$price_addons += $booking['Booking']['beds'] * $nights * $upsell['price'];
+		}
+		
+		$price =  $price_room + $price_meals + $price_addons;
+		
+		return $price;
+	}
 
 }

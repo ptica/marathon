@@ -217,55 +217,8 @@ class BookingsController extends AppController {
 	public function price_all() {
 		$bookings = $this->Booking->find('all');
 		
-		// TODO slice and dice it into a $this->Booking->get_price($booking);
-		
-		$this->loadModel('Room');
-		$this->loadModel('Location');
-		$this->loadModel('Meal');
-		
-		$rooms = $this->Room->find('all');
-		foreach ($rooms as &$item) {
-			//$item['Price'] = Hash::combine($item['Price'], '{n}.price_type_id', '{n}.price');
-			$item['Price'] = $item['Price'][0]['price'];
-		}
-		$rooms = Hash::combine($rooms, '{n}.Room.id', '{n}');
-
-		// get upsells keyed by locations
-		$this->Location->bindModel(
-			array('hasMany' => array(
-				'Upsell' => array('order'=>'ord asc')
-			))
-		);
-		$upsells = $this->Location->find('all');
-		$upsells = Hash::combine($upsells, '{n}.Location.id', '{n}.Upsell');
-		$meals = $this->Meal->find('all');
-		$meals = Hash::combine($meals, '{n}.Meal.id', '{n}.Meal');
-		
 		foreach ($bookings as $booking) {
-			// price_room
-			$start  = explode(' ', $booking['Booking']['start']);
-			$end    = explode(' ', $booking['Booking']['end']);
-			$start  = strtotime($start[0]);
-			$end    = strtotime($end[0]);
-			$nights = $end - $start;
-			$nights = floor($nights/(60*60*24));
-			$room_id = $booking['Booking']['room_id'];
-			
-			$price_room = $booking['Booking']['beds'] * $nights * @$rooms[$room_id]['Price'];
-			
-			// price_meals
-			$price_meals = 0;
-			if (!empty($booking['Meals'])) foreach ($booking['Meals'] as $meal) {
-				$price_meals += $meal['price'];
-			}
-			
-			// price addons
-			$price_addons = 0;
-			if (!empty($booking['Upsell'])) foreach ($booking['Upsell'] as $upsell) {
-				$price_addons += $booking['Booking']['beds'] * $nights * $upsell['price'];
-			}
-			
-			$price =  $price_room + $price_meals + $price_addons;
+			$price = $this->Booking->get_price($booking);
 			
 			$this->Booking->clear();
 			$this->Booking->save(array(
@@ -273,6 +226,8 @@ class BookingsController extends AppController {
 				'web_price' => $price
 			));
 		}
+		
+		debug('OK');
 	}
 	
 	/**
