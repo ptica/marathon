@@ -196,14 +196,13 @@ class BookingsController extends AppController {
 		
 		foreach ($bookings as $booking) {
 			echo("sending email for " . $booking['Booking']['email']. "<br>");
-			$this->Booking->create();
+			$this->Booking->clear();
 			$this->Booking->save(array(
 				'id' =>  $booking['Booking']['id'],
 				'paylink_sent' => date('Y-m-d H:i:s')
 			));
 			//$this->send_link_to_payment($booking['Booking']['id']);
 		}
-		exit();
 	}
 	
 	public function mail_one($booking_id) {
@@ -213,14 +212,12 @@ class BookingsController extends AppController {
 		$booking = $this->Booking->find('first', compact('conditions'));
 		
 		echo("sending email for " . $booking['Booking']['email']. "<br>");
-		$this->Booking->create();
+		$this->Booking->clear();
 		$this->Booking->save(array(
 			'id' =>  $booking['Booking']['id'],
 			'paylink_sent' => date('Y-m-d H:i:s')
 		));
-		$this->send_link_to_payment($booking['Booking']['id']);
-
-		exit();
+		//$this->send_link_to_payment($booking['Booking']['id']);
 	}
 	
 	/**
