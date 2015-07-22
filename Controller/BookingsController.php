@@ -76,9 +76,6 @@ class BookingsController extends AppController {
 		} else {
 			$options = array('conditions' => array('Booking.' . $this->Booking->primaryKey => $id));
 			$this->request->data = $this->Booking->find('first', $options);
-			if (!$this->request->data['Booking']['room_id']) {
-				$this->request->data['Booking']['beds'] = 0;
-			}
 		}
 		$this->request->data = $booking;
 		$priceTypes          = $this->Booking->PriceType->find('list');
@@ -139,9 +136,6 @@ class BookingsController extends AppController {
 		} else {
 			$options = array('conditions' => array('Booking.' . $this->Booking->primaryKey => $id));
 			$this->request->data = $this->Booking->find('first', $options);
-			if (!$this->request->data['Booking']['room_id']) {
-				$this->request->data['Booking']['beds'] = 0;
-			}
 		}
 		$rooms = $this->Booking->Room->find('list');
 		$priceTypes = $this->Booking->PriceType->find('list');
@@ -248,9 +242,6 @@ class BookingsController extends AppController {
 		$meals = Hash::combine($meals, '{n}.Meal.id', '{n}.Meal');
 		
 		foreach ($bookings as $booking) {
-			// normalize beds count
-			if (!$booking['Booking']['room_id']) $booking['Booking']['beds'] = 0;
-			
 			// price_room
 			$start  = explode(' ', $booking['Booking']['start']);
 			$end    = explode(' ', $booking['Booking']['end']);
