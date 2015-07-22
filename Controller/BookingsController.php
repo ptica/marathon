@@ -188,7 +188,7 @@ class BookingsController extends AppController {
 		$Email->send($content);
 	}
 	
-	public function mail($booking_id) {
+	public function mail_all() {
 		$conditions = array(
 			'Booking.web_price >' => 0
 		);
@@ -203,6 +203,23 @@ class BookingsController extends AppController {
 			));
 			//$this->send_link_to_payment($booking['Booking']['id']);
 		}
+		exit();
+	}
+	
+	public function mail_one($booking_id) {
+		$conditions = array(
+			'Booking.id' => $booking_id
+		);
+		$booking = $this->Booking->find('first', compact('conditions'));
+		
+		echo("sending email for " . $booking['Booking']['email']. "<br>");
+		$this->Booking->create();
+		$this->Booking->save(array(
+			'id' =>  $booking['Booking']['id'],
+			'paylink_sent' => date('Y-m-d H:i:s')
+		));
+		$this->send_link_to_payment($booking['Booking']['id']);
+
 		exit();
 	}
 	
