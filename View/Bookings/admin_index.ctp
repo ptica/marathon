@@ -1,3 +1,6 @@
+<?php
+	//debug($bookings);
+?>
 <div class="bookings index">
 	<div class="row">
 		<div class="col-md-12">
@@ -25,6 +28,7 @@
 						<th><?php echo $this->Paginator->sort('end'); ?></th>
 						<th><?php echo $this->Paginator->sort('email'); ?></th>
 						<th><?php echo $this->Paginator->sort('fellow_email'); ?></th>
+						<th>payment</th>
 						<th class="actions"></th>
 					</tr>
 				</thead>
@@ -53,6 +57,11 @@
 						<td><?php echo $this->Time->format($booking['Booking']['end'], '%-d.%-m.&nbsp;%Y'); ?></td>
 						<td><?php echo h($booking['Booking']['email']); ?></td>
 						<td><?php echo h($booking['Booking']['fellow_email']); ?></td>
+						<td style="font-size:11px"><?php
+							$statuses = Hash::extract($booking['Payment'], '{n}.status');
+							$status = implode(' | ', $statuses);
+							echo $status;
+						?></td>
 						<td class="actions">
 							<?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', array('action' => 'edit', $booking['Booking']['id']), array('escape' => false)); ?>
 							<?php echo $this->Form->postLink('<span class="glyphicon glyphicon-remove"></span>', array('action' => 'delete', $booking['Booking']['id']), array('escape' => false), __('Are you sure you want to delete # %s?', $booking['Booking']['id'])); ?>

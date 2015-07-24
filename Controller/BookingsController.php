@@ -89,7 +89,19 @@ class BookingsController extends AppController {
 	}
 
 	public function admin_index() {
-		$this->Booking->recursive = 0;
+		$this->Booking->bindModel(array(
+			'hasMany' => array(
+				'Payment' => array(
+					'className' => 'Payment.Payment',
+					'conditions' => array(
+						'Payment.status !=' => null
+					),
+					'order' => 'Payment.id ASC'
+				)
+			))
+		);
+		
+		$this->Booking->recursive = 1;
 		$this->Paginator->settings = $this->paginate;
 		$this->set('bookings', $this->Paginator->paginate());
 		//$this->set('bookings', $this->Booking->find('all'));
