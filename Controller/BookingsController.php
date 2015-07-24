@@ -38,7 +38,7 @@ class BookingsController extends AppController {
 				$this->Session->setFlash(__('The registration has been saved.'), 'default', array('class' => 'alert alert-success'));
 				
 				return $this->redirect("/pay/$booking_id/$token");
-				//$this->email_add_notice();
+				$this->email_add_notice();
 				//return $this->redirect('/thank-you');
 			} else {
 				$this->Session->setFlash(__('The registration could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
@@ -182,9 +182,9 @@ class BookingsController extends AppController {
 
 	private function email_add_notice() {
 		$content = array();
-		$content[] = 'Thank you for your registration!';
+		$content[] = 'Your registration details were saved!';
 		$content[] = '';
-		$content[] = 'You may review your registration details at:';
+		$content[] = 'You may review your registration details or find the payment link at:';
 		$content[] = Router::url('/edit/' . $this->Booking->field('token'), true);
 		$owner_mail = $this->Booking->field('email');
 		$to = array($owner_mail);
@@ -223,7 +223,7 @@ class BookingsController extends AppController {
 			'id' =>  $booking['Booking']['id'],
 			'paylink_sent' => date('Y-m-d H:i:s')
 		));
-		//$this->send_link_to_payment($booking['Booking']['id']);
+		$this->send_link_to_payment($booking['Booking']['id']);
 	}
 	
 	public function price_all() {
@@ -257,20 +257,24 @@ class BookingsController extends AppController {
 
 		$this->set_request_scheme();
 		$token = $booking['Booking']['token'];
+		$name = $booking['Booking']['name'];
 		$subject = 'MTM 2015 Registration Payment';
 		$to = $booking['Booking']['email'];
 		$to = array($to);
 		
 		$content = array();
-		$content[] = 'Hello!';
+		$content[] = "Dear $name.";
 		$content[] = '';
-		$content[] = 'Please review your registration details and proceed to payment at ';
+		$content[] = 'Thank you for registering at MT Marathon. To confirm your booking, you need to make the payment *before July 31*.';
+		$content[] = '';
+		$content[] = 'Please review your registration details and proceed to the payment at ';
 		$content[] = Router::url("/pay/$booking_id/$token", $absolute=true);
 		$content[] = '';
 		$content[] = 'Take care, the MTM 2015 team.';
 
 		$Email = new CakeEmail('default');
 		$Email->to($to);
+		$Email->subject($subject);
 		$Email->send($content);
 	}
 }
