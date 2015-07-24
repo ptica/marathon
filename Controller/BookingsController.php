@@ -4,7 +4,7 @@ App::uses('CakeEmail', 'Network/Email');
 
 class BookingsController extends AppController {
 	public $layout = 'BootstrapCake.bootstrap';
-
+	
 	public $components = array('Paginator', 'Session');
 
 	public $paginate = array(
@@ -76,9 +76,6 @@ class BookingsController extends AppController {
 		} else {
 			$options = array('conditions' => array('Booking.' . $this->Booking->primaryKey => $id));
 			$this->request->data = $this->Booking->find('first', $options);
-			if (!$this->request->data['Booking']['room_id']) {
-				$this->request->data['Booking']['beds'] = 0;
-			}
 		}
 		$this->request->data = $booking;
 		$priceTypes          = $this->Booking->PriceType->find('list');
@@ -92,7 +89,19 @@ class BookingsController extends AppController {
 	}
 
 	public function admin_index() {
-		$this->Booking->recursive = 0;
+		$this->Booking->bindModel(array(
+			'hasMany' => array(
+				'Payment' => array(
+					'className' => 'Payment.Payment',
+					'conditions' => array(
+						'Payment.status !=' => null
+					),
+					'order' => 'Payment.id ASC'
+				)
+			))
+		);
+		
+		$this->Booking->recursive = 1;
 		$this->Paginator->settings = $this->paginate;
 		$this->set('bookings', $this->Paginator->paginate());
 		//$this->set('bookings', $this->Booking->find('all'));
@@ -139,9 +148,6 @@ class BookingsController extends AppController {
 		} else {
 			$options = array('conditions' => array('Booking.' . $this->Booking->primaryKey => $id));
 			$this->request->data = $this->Booking->find('first', $options);
-			if (!$this->request->data['Booking']['room_id']) {
-				$this->request->data['Booking']['beds'] = 0;
-			}
 		}
 		$rooms = $this->Booking->Room->find('list');
 		$priceTypes = $this->Booking->PriceType->find('list');
@@ -196,14 +202,13 @@ class BookingsController extends AppController {
 		
 		foreach ($bookings as $booking) {
 			echo("sending email for " . $booking['Booking']['email']. "<br>");
-			$this->Booking->create();
+			$this->Booking->clear();
 			$this->Booking->save(array(
 				'id' =>  $booking['Booking']['id'],
 				'paylink_sent' => date('Y-m-d H:i:s')
 			));
 			//$this->send_link_to_payment($booking['Booking']['id']);
 		}
-		exit();
 	}
 	
 	public function mail_one($booking_id) {
@@ -213,14 +218,28 @@ class BookingsController extends AppController {
 		$booking = $this->Booking->find('first', compact('conditions'));
 		
 		echo("sending email for " . $booking['Booking']['email']. "<br>");
-		$this->Booking->create();
+		$this->Booking->clear();
 		$this->Booking->save(array(
 			'id' =>  $booking['Booking']['id'],
 			'paylink_sent' => date('Y-m-d H:i:s')
 		));
-		$this->send_link_to_payment($booking['Booking']['id']);
-
-		exit();
+		//$this->send_link_to_payment($booking['Booking']['id']);
+	}
+	
+	public function price_all() {
+		$bookings = $this->Booking->find('all');
+		
+		foreach ($bookings as $booking) {
+			$price = $this->Booking->get_price($booking);
+			
+			$this->Booking->clear();
+			$this->Booking->save(array(
+				'id' =>  $booking['Booking']['id'],
+				'web_price' => $price
+			));
+		}
+		
+		debug('OK');
 	}
 	
 	/**

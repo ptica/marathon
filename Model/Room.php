@@ -98,5 +98,19 @@ class Room extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+	
+	private $rooms = null;
+	public function get_rooms_by_id() {
+		if (!$this->rooms) {
+			$this->rooms = $this->find('all');
+			foreach ($this->rooms as &$item) {
+				//$item['Price'] = Hash::combine($item['Price'], '{n}.price_type_id', '{n}.price');
+				// as of now just one price_type
+				$item['Price'] = $item['Price'][0]['price'];
+			}
+			$this->rooms = Hash::combine($this->rooms, '{n}.Room.id', '{n}');
+		}
+		return $this->rooms;
+	}
 
 }
