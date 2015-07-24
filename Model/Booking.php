@@ -127,7 +127,7 @@ class Booking extends AppModel {
 		
 		// price_meals
 		$price_meals = 0;
-		if (!empty($booking['Meals'])) foreach ($booking['Meals'] as $meal) {
+		if (!empty($booking['Meal'])) foreach ($booking['Meal'] as $meal) {
 			$price_meals += $meal['price'];
 		}
 		
