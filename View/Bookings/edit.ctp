@@ -119,7 +119,14 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-8">
-						<?php echo $this->Form->submit(__('Submit'), array('class'=>'btn btn-primary')); ?>
+						<?php
+							$booking_id = $this->request->data['Booking']['id'];
+							$token = $this->request->data['Booking']['token'];
+						?>
+						<div style="float:right; margin-right:65px;margin-top:45px;">
+							<a class="btn btn-success" href="<?php echo @Router::url("/pay/$booking_id/$token"); ?>">back to payment</a>
+						</div>
+						<?php echo $this->Form->submit(__('Submit'), array('class'=>'btn btn-primary','style'=>'margin-top:45px; margin-bottom:45px')); ?>
 					</div>
 
 				</div>
