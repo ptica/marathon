@@ -27,8 +27,9 @@
 						<th><?php echo $this->Paginator->sort('start'); ?></th>
 						<th><?php echo $this->Paginator->sort('end'); ?></th>
 						<th><?php echo $this->Paginator->sort('email'); ?></th>
-						<th><?php echo $this->Paginator->sort('fellow_email'); ?></th>
-						<th>payment</th>
+						<th><?php echo $this->Paginator->sort('fellow_email', 'Fellow'); ?></th>
+						<th>Price</th>
+						<th>Payment</th>
 						<th class="actions"></th>
 					</tr>
 				</thead>
@@ -57,6 +58,7 @@
 						<td><?php echo $this->Time->format($booking['Booking']['end'], '%-d.%-m.&nbsp;%Y'); ?></td>
 						<td><?php echo h($booking['Booking']['email']); ?></td>
 						<td><?php echo h($booking['Booking']['fellow_email']); ?></td>
+						<td style="text-align:right"><?php echo h($booking['Booking']['web_price']); ?>&nbsp;Kč</td>
 						<td style="font-size:11px"><?php
 							$statuses = Hash::extract($booking['Payment'], '{n}.status');
 							$status = implode(' | ', $statuses);
