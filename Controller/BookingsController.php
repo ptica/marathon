@@ -207,7 +207,7 @@ class BookingsController extends AppController {
 				'id' =>  $booking['Booking']['id'],
 				'paylink_sent' => date('Y-m-d H:i:s')
 			));
-			//$this->send_link_to_payment($booking['Booking']['id']);
+			$this->send_link_to_payment($booking['Booking']['id']);
 		}
 	}
 	
