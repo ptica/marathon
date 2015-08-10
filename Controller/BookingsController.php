@@ -107,6 +107,26 @@ class BookingsController extends AppController {
 		//$this->set('bookings', $this->Booking->find('all'));
 		$this->set('locations', $this->Booking->Room->Location->find('list'));
 	}
+	
+	public function admin_payments() {
+		$this->Booking->bindModel(array(
+			'hasMany' => array(
+				'Payment' => array(
+					'className' => 'Payment.Payment',
+					'conditions' => array(
+						'Payment.status' => 'confirmed ok'
+					),
+					'order' => 'Payment.id ASC'
+				)
+			))
+		);
+		
+		$this->Booking->recursive = 1;
+		$this->Paginator->settings = $this->paginate;
+		$this->set('bookings', $this->Paginator->paginate());
+		//$this->set('bookings', $this->Booking->find('all'));
+		$this->set('locations', $this->Booking->Room->Location->find('list'));
+	}
 
 	public function admin_view($id = null) {
 		if (!$this->Booking->exists($id)) {

@@ -105,11 +105,31 @@ class Booking extends AppModel {
 			if (!$item['Booking']['room_id']) {
 				$item['Booking']['beds'] = 0;
 			}
+			
+			if (isset($item['Booking']['start']) &&
+				isset($item['Booking']['end'])
+			) {
+				$s = explode(' ', $item['Booking']['start']);
+				$s = explode('-', $s[0]);
+				$e = explode(' ', $item['Booking']['end']);
+				$e = explode('-', $e[0]);
+				/// define indexes
+				$day   = 2;
+				$month = 1;
+				$year  = 0;
+				//
+				if ($s[$year] == $e[$year] && $s[$month] == $e[$month]) {
+					$item['Booking']['date_txt'] = "${s[$day]}. – ${e[$day]}. ${e[$month]}.";
+				} else {
+					$item['Booking']['date_txt'] = "${s[$day]}. ${s[$month]}. – ${e[$day]}. ${e[$month]}.";
+				}
+
+			}
 		}
 		return $result;
 	}
 	
-	public function get_price($booking) {
+	public function get_price($booking, $per_partes=false) {
 		$rooms = $this->Room->get_rooms_by_id();
 		//$upsells = $this->Upsell->get_upsells_by_location();
 		//$meals = $this->Meals->get_meals_by_id();
@@ -139,6 +159,14 @@ class Booking extends AppModel {
 		
 		$price =  $price_room + $price_meals + $price_addons;
 		
+		if ($per_partes) {
+			return array(
+				'room' => $price_room,
+				'addons' => $price_addons,
+				'accomodation' => $price_room + $price_addons,
+				'meals' => $price_meals
+			);
+		}
 		return $price;
 	}
 
