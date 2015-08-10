@@ -10,7 +10,7 @@
 					<ul class="nav nav-pills pull-right">
 							<li><?php echo $this->Html->link('<span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;' . __('List Bookings'), array('action'=>'index'), array('escape'=>false)); ?></li>
 					</ul>
-					<h1><?php echo __('Payments'); ?></h1>
+					<h1><?php echo __('Recieved Payments'); ?></h1>
 			</div>
 		</div>
 	</div>

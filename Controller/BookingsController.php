@@ -122,9 +122,23 @@ class BookingsController extends AppController {
 		);
 		
 		$this->Booking->recursive = 1;
-		$this->Paginator->settings = $this->paginate;
+		$joins = array(
+			array(
+				'table' => 'payments',
+				'alias' => 'Payment',
+				'type' => 'INNER',
+				'conditions' => array(
+					'Payment.booking_id = Booking.id',
+					'Payment.status' => 'confirmed ok',
+				)
+			)
+		);
+		$this->Paginator->settings = array(
+			'limit' => 75,
+			'joins' => $joins
+		);
 		$this->set('bookings', $this->Paginator->paginate());
-		//$this->set('bookings', $this->Booking->find('all'));
+		//$this->set('bookings', $this->Booking->find('all', array('joins'=>$joins)));
 		$this->set('locations', $this->Booking->Room->Location->find('list'));
 	}
 
