@@ -36,9 +36,9 @@ class BookingsController extends AppController {
 					);
 				}
 				$this->Session->setFlash(__('The registration has been saved.'), 'default', array('class' => 'alert alert-success'));
+				$this->email_add_notice();
 				
 				return $this->redirect("/pay/$booking_id/$token");
-				$this->email_add_notice();
 				//return $this->redirect('/thank-you');
 			} else {
 				$this->Session->setFlash(__('The registration could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-danger'));

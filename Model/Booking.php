@@ -102,7 +102,7 @@ class Booking extends AppModel {
 	public function afterFind($result, $primary = false) {
 		foreach ($result as $key => &$item) {
 			// normalize beds count
-			if (!$item['Booking']['room_id']) {
+			if (@!$item['Booking']['room_id']) {
 				$item['Booking']['beds'] = 0;
 			}
 			

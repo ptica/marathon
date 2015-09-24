@@ -21,6 +21,7 @@
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 					<thead>
 						<tr>
+							<th>ORDERNUMBER</th>
 							<th><?php echo $this->Paginator->sort('name'); ?></th>
 							<th><?php echo $this->Paginator->sort('room_id'); ?></th>
 							<th><?php echo $this->Paginator->sort('start', 'Date'); ?></th>
@@ -33,6 +34,7 @@
 					<tbody>
 					<?php foreach ($bookings as $booking) { ?>
 						<tr>
+							<td><?php $payment = end($booking['Payment']); echo $payment['id']; ?></td>
 							<td><?php echo h($booking['Booking']['name']); ?></td>
 							<td>
 								<?php
