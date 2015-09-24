@@ -64,7 +64,14 @@
 		'data-page'			=> @$this->request->params['pass'][0],
 	));
 ?>
-	<div class="wrap container" role="document">
+<?php
+	if ($this->request->params['controller'] == 'bookings' &&  $this->request->params['action'] == 'admin_index') {
+		$container_class = "container-fluid";
+	} else {
+		$container_class = "container";
+	}
+?>
+	<div class="wrap <?php echo $container_class?>" role="document">
 		<?php echo $this->Session->flash(); ?>
 		<?php echo $this->Element('navigation'); ?>
 
