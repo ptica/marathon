@@ -66,6 +66,10 @@
 						</div>
 					</div>
 				<?php } ?>
+
+				<div class="form-group">
+					<?php echo $this->Form->input('Upsell', array('disabled'=>'disabled', 'multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
+				</div>
 				
 				<div class="form-group">
 					<?php echo $this->Form->input('start', array(
