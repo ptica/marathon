@@ -18,6 +18,19 @@
 			<?php //echo $this->element('admin_navigation'); ?>
 		</div><!-- end col md 3 -->
 		<div class="col-md-9">
+			<?php
+				$booking_id = $this->request->data['Booking']['id'];
+				$token = $this->request->data['Booking']['token'];
+			?>
+			<div style="margin:2em 10em">
+				<a class="btn btn-success" href="<?php echo @Router::url("/pay/$booking_id/$token"); ?>">Proceed to Payment</a>
+			</div>
+			    <div class="form-group">
+				<label for="QueryQuery" class="col-sm-2 control-label"></label>
+				<div class="col-sm-8 input-group">
+				    <p class="form-control-static">Or you may review your registration details, even correct typos that are not price related and then save it below:</p>
+				</div>
+			    </div>
 			<?php echo $this->Form->create('Booking', array('role'=>'form', 'class'=>'form-horizontal')); ?>
 				<div class="form-group">
 					<?php echo $this->Form->input('name', array('label'=>'Your Name', 'class'=>'form-control', 'placeholder'=>__('Name')));?>
@@ -102,9 +115,9 @@
 				<div class="form-group">
 					<?php echo $this->Form->input('email', array('label'=>'Your email', 'class'=>'form-control', 'placeholder'=>__('Email')));?>
 				</div>
-				<div class="form-group">
+				<!--div class="form-group">
 					<?php echo $this->Form->input('fellow_email', array('label'=>'Room Fellows', 'class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
-				</div>
+				</div-->
 				<?php if (!empty($booking['Booking']['Upsell'])) { ?>
 					<div class="form-group">
 						<?php echo $this->Form->input('Upsell', array('multiple'=>'checkbox', 'class'=>'form-control', 'placeholder'=>__('Fellow Email')));?>
@@ -123,14 +136,7 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-8">
-						<?php
-							$booking_id = $this->request->data['Booking']['id'];
-							$token = $this->request->data['Booking']['token'];
-						?>
-						<div style="float:right; margin-right:65px;margin-top:45px;">
-							<a class="btn btn-success" href="<?php echo @Router::url("/pay/$booking_id/$token"); ?>">back to payment</a>
-						</div>
-						<?php echo $this->Form->submit(__('Submit'), array('class'=>'btn btn-primary','style'=>'margin-top:45px; margin-bottom:45px')); ?>
+						<?php echo $this->Form->submit(__('Save Updated Details'), array('class'=>'btn btn-primary','style'=>'margin-top:45px; margin-bottom:45px')); ?>
 					</div>
 
 				</div>

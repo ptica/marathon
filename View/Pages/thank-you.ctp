@@ -11,5 +11,5 @@
 </p>
 
 <p>
-    Take care, the MTM 2015 team.
+    Take care, the MTM 2016 team.
 </p>

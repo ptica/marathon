@@ -249,6 +249,8 @@ var Booking = React.createClass({
 		var meal_price    = this.get_selected_meals_price();
 		var total_price   = Math.round10(room_price + upsell_price + meal_price, -2).toFixed(2);
 
+		var hiddenStyle = {visibility: 'hidden'};
+
 		return (
 			<div>
 				<div className="row">
@@ -321,7 +323,7 @@ for your printed receipt:
 						<label htmlFor="BookingStart" className="col-sm-2 control-label">Arrival</label>
 						<div className="col-sm-8 input-group">
 							<div className="input-group">
-								<input ref="start" onChange={this.countNights} data-date-max-date="2015-09-13" data-date-min-date="2015-09-02" defaultValue="6.9.2015" name="data[Booking][start]" className="form-control" data-provide="datepicker" placeholder="Start" type="text" id="BookingStart"/>
+								<input ref="start" onChange={this.countNights} data-date-max-date="2016-09-18" data-date-min-date="2016-09-11" defaultValue="11.9.2016" name="data[Booking][start]" className="form-control" data-provide="datepicker" placeholder="Start" type="text" id="BookingStart"/>
 								<span className="input-group-addon"><i className="glyphicon glyphicon-th"></i></span>
 							</div>
 						</div>
@@ -331,7 +333,7 @@ for your printed receipt:
 						<label htmlFor="BookingEnd" className="col-sm-2 control-label">Departure</label>
 						<div className="col-sm-8 input-group">
 							<div className="input-group">
-								<input ref="end" onChange={this.countNights} data-date-max-date="2015-09-13" data-date-min-date="2015-09-02" defaultValue="13.9.2015" name="data[Booking][end]" className="form-control" data-provide="datepicker" placeholder="End" type="text" id="BookingEnd"/>
+								<input ref="end" onChange={this.countNights} data-date-max-date="2016-09-18" data-date-min-date="2016-09-11" defaultValue="18.9.2016" name="data[Booking][end]" className="form-control" data-provide="datepicker" placeholder="End" type="text" id="BookingEnd"/>
 								<span className="input-group-addon"><i className="glyphicon glyphicon-th"></i></span>
 							</div>
 						</div>
@@ -357,15 +359,15 @@ for your printed receipt:
 					<div className="form-group">
 						<label htmlFor="QueryQuery" className="col-sm-2 control-label"></label>
 						<div className="col-sm-8 input-group">
-							<p className="form-control-static">For students (each occupant needs to show a valid ISIC!), we offer the following accommodation options.</p>
-							<p className="form-control-static">To book a room with a fellow of yours, one of you should book two (or three) beds in a larger room.
+							<p className="form-control-static">For students (each occupant needs to show a valid ISIC!), a very limited number of rooms in student dormitories is available.</p>
+							{/*<p className="form-control-static">To book a room with a fellow of yours, one of you should book two (or three) beds in a larger room.
 								If you  book just one bed in a larger room, you may want to tell us your preferred party, otherwise,
 								we may need to allocate another random participant to the room.
-							</p>
+							</p>*/}
 						</div>
 					</div>
 
-					<div className="form-group">
+					<div className="form-group" style={hiddenStyle}>
 						<label htmlFor="BookingBeds" className="col-sm-2 control-label">Beds</label>
 						<div className="col-sm-8 input-group">
 							<input ref="beds" value={this.state.selected_beds} onChange={this.selectBeds} name="data[Booking][beds]" className="form-control" placeholder="Beds" type="tel" id="BookingBeds" required="required"/>
@@ -379,7 +381,7 @@ for your printed receipt:
 						</div>
 					</div>
 
-					<div className="form-group">
+					<div className="form-group" style={hiddenStyle}>
 						<label htmlFor="BookingFellowEmail" className="col-sm-2 control-label">Room Fellows</label>
 						<div className="col-sm-8 input-group">
 							<input ref="fellow_email" name="data[Booking][fellow_email]" className="form-control" placeholder="fill in emails of participants you want to share the room with (comma separated)" maxLength="255" type="text" id="BookingFellowEmail"/>
@@ -397,8 +399,9 @@ for your printed receipt:
 					<div className="form-group">
 						<label htmlFor="QueryQuery" className="col-sm-2 control-label">Lunches</label>
 						<div className="col-sm-8 input-group">
-							<p className="form-control-static">You (the registrant) may want lunches at the conference venue on the following MT Marathon days (Sept 7-Sept 12):</p>
+							<p className="form-control-static">You (the registrant) may want lunches at the conference venue on the following MT Marathon days (Sept 12-Sept 17).</p>
 							<p className="form-control-static">The price is per lunch (includes soup, main dish, dessert and drink).</p>
+							<p className="form-control-static">Participants with these pre-paid lunches will have dedicated tables in the restaurant in the basement. You might be able to get a place (and meal, of course) without this booking, in which case you will be selecting from a daily menu and most importantly, you will have to sit at different tables.</p>
 						</div>
 					</div>
 
